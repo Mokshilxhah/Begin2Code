@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Notes Grid</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+            crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"/>
+<style>
+    body {
+        background: #f4f5f7;
+        font-family: sans-serif;
+        padding-top: 100px;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .container {
+        flex: 1;
+    }  
+
+    .navbar {
+        background: #111827 !important;
+    }
+
+    .Notes-container {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+    }
+
+    .Notes-container:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .image-box {
+        height: 220px;
+        background: #e5e7eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 36px;
+        color: #9ca3af;
+    }
+
+    .content-box {
+        padding: 15px;
+        background-color: rgb(250, 150, 135);
+    }
+
+    .download-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 12px;
+        background: #3b82f6;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        text-decoration: none;
+    }
+
+    .download-btn:hover {
+        background: #2563eb;
+    }
+
+    footer {
+        background: #111827;
+        padding: 25px 0;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 70px;
+        color: #9ca3af;
+    }
+</style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="#">Begin2Code</a>
+      </div>
+    </nav>
+
+<div class="container">
+    <div class="row g-4">
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/CC++.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Java.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Python.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Javascript.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Html.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Css.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/React.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Angular.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Node.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Express.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Typescript.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Express.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Spring.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Bootstrap.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Django.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+               <div class="image-box">
+                    <img src="Notes/Flask.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Mysql.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Mongo.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Firebase.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center">
+            <div class="Notes-container">
+                <div class="image-box">
+                    <img src="Notes/Redis.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <div class="content-box">
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+    <footer>© 2025 Begin2Code. All Rights Reserved.</footer>
+</body>
+</html>
