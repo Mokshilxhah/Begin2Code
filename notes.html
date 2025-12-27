@@ -41,44 +41,75 @@
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         width: 100%;
+        height: 300px;
+        position: relative;
+        overflow: hidden;
     }
 
     .Notes-container:hover {
         transform: translateY(-6px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        background: transparent;
+    }
+
+    .Notes-container:hover .image-box img {
+        opacity: 0.25;
+        transition: 0.3s ease;
+    }
+
+    .notes-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        opacity: 0;
+        transition: 0.3s ease;
+    }
+
+    .Notes-container:hover .notes-overlay {
+        opacity: 1;
+    }
+
+    .note-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        color: white;
+        background: rgba(17, 24, 39, 0.85);
+        backdrop-filter: blur(6px);
+        transition: all 0.3s ease;
+    }
+
+    .note-badge.full { background: #2563eb; }
+    .note-badge.short { background: #16a34a; }
+    .note-badge.mind { background: #9333ea; }
+
+    .note-badge:hover {
+        transform: scale(1.07);
+        box-shadow: 0 0 14px rgba(0,0,0,0.4);
+        opacity: 0.95;
+    }
+
+    .note-badge i {
+        font-size: 14px;
     }
 
     .image-box {
-        height: 220px;
+        height: 280px;
         background: #e5e7eb;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 36px;
         color: #9ca3af;
-    }
-
-    .content-box {
-        padding: 15px;
-        background-color: rgb(250, 150, 135);
-    }
-
-    .download-btn {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 6px 12px;
-        background: #3b82f6;
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        font-size: 0.9rem;
-        cursor: pointer;
-        transition: background 0.3s ease;
-        text-decoration: none;
-    }
-
-    .download-btn:hover {
-        background: #2563eb;
     }
 
     footer {
@@ -88,6 +119,16 @@
         font-size: 14px;
         margin-top: 70px;
         color: #9ca3af;
+    }
+
+
+    @media (max-width: 400px){
+        .Notes-container {
+            height: 250px;
+        }
+        .image-box {
+            height: 210px;
+        }
     }
 </style>
 </head>
@@ -106,8 +147,10 @@
                 <div class="image-box">
                     <img src="Notes/CC++.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -117,8 +160,10 @@
                 <div class="image-box">
                     <img src="Notes/Java.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -128,8 +173,10 @@
                 <div class="image-box">
                     <img src="Notes/Python.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -139,8 +186,10 @@
                 <div class="image-box">
                     <img src="Notes/Javascript.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -151,8 +200,10 @@
                 <div class="image-box">
                     <img src="Notes/Html.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -162,8 +213,10 @@
                 <div class="image-box">
                     <img src="Notes/Css.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -173,8 +226,10 @@
                 <div class="image-box">
                     <img src="Notes/React.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -184,8 +239,10 @@
                 <div class="image-box">
                     <img src="Notes/Angular.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -196,8 +253,10 @@
                 <div class="image-box">
                     <img src="Notes/Node.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -207,8 +266,10 @@
                 <div class="image-box">
                     <img src="Notes/Express.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -218,8 +279,10 @@
                 <div class="image-box">
                     <img src="Notes/Typescript.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -229,8 +292,10 @@
                 <div class="image-box">
                     <img src="Notes/Express.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -241,8 +306,10 @@
                 <div class="image-box">
                     <img src="Notes/Spring.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -252,8 +319,10 @@
                 <div class="image-box">
                     <img src="Notes/Bootstrap.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -263,8 +332,10 @@
                 <div class="image-box">
                     <img src="Notes/Django.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -274,8 +345,10 @@
                <div class="image-box">
                     <img src="Notes/Flask.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -286,8 +359,10 @@
                 <div class="image-box">
                     <img src="Notes/Mysql.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -297,8 +372,10 @@
                 <div class="image-box">
                     <img src="Notes/Mongo.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -308,8 +385,10 @@
                 <div class="image-box">
                     <img src="Notes/Firebase.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
@@ -319,8 +398,10 @@
                 <div class="image-box">
                     <img src="Notes/Redis.png" alt="Note Preview" style="width:100%; height:100%; object-fit:cover;">
                 </div>
-                <div class="content-box">
-                    <a href="#" class="download-btn">Download</a>
+                <div class="notes-overlay">
+                    <a href="#" class="note-badge full"><i class="fa-solid fa-book"></i> Full Notes</a>
+                    <a href="#" class="note-badge short"><i class="fa-solid fa-file-lines"></i> Short Notes</a>
+                    <a href="#" class="note-badge mind"><i class="fa-solid fa-brain"></i> Mind Maps</a>
                 </div>
             </div>
         </div>
