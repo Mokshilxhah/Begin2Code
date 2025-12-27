@@ -218,8 +218,6 @@ html, body {
     100% { transform: translateX(-50%); }
 }
 
-/* Company Slider */
-
 .company-slider-section {
     padding: 10px 0;
     background: #f9f9f9;
@@ -508,6 +506,7 @@ html, body {
     color: #ea6b55;
 }
 
+/* ======================================== Mobile Responsive =========================================== */
 @media (max-width: 992px) {
     .footer-lists {
         grid-template-columns: repeat(2, 1fr);
@@ -515,7 +514,6 @@ html, body {
     }
 }
 
-/* ======================================== Mobile Responsive Changes =========================================== */
 @media (max-width: 768px) {
     .navbar-toggler {
         position: absolute;
@@ -551,6 +549,10 @@ html, body {
 
     .stats-box p{
         font-size: 20px;
+    }
+
+    .modal-box {
+        width: 95%;
     }
 
     .card{
@@ -741,4 +743,5 @@ html, body {
         margin: 0 8px;
     }
 }
+
 
