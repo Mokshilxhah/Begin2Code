@@ -21,7 +21,7 @@ stats = [
             "count": "10,000+",
             "label": "Happy Students",
             "bg_class": "bg-purple",
-            "image": "images/happy.png"
+            "image": "images/Happy.png"
         },
         {
             "count": "1500+",
@@ -33,13 +33,13 @@ stats = [
             "count": "3000+",
             "label": "Practice Sets",
             "bg_class": "bg-blue",
-            "image": "images/practice.png"
+            "image": "images/Practice.png"
         },
         {
             "count": "60+",
             "label": "Courses On Platform",
             "bg_class": "bg-orange",
-            "image": "images/course.png"
+            "image": "images/Course.png"
         }
     ]
 
@@ -87,32 +87,32 @@ problems_row_2 = [
 
 offerings = [
     {
-        "image": "images/progress.png",
+        "image": "images/Progress.png",
         "title": "Progress Tracking and Leaderboard",
         "img_style": "width:120px; height:100px;"
     },
     {
-        "image": "images/teaching.png",
+        "image": "images/Teaching.png",
         "title": "40+ Hrs of Recorded Lecture",
         "img_style": "width:120px; height:100px;"
     },
     {
-        "image": "images/notes.png",
+        "image": "images/Notes.png",
         "title": "100+ Curated Practice Problems",
         "img_style": "width:120px; height:120px;"
     },
     {
-        "image": "images/community.png",
+        "image": "images/Community.png",
         "title": "Community Support",
         "img_style": "width:120px; height:120px;"
     },
     {
-        "image": "images/hints.png",
+        "image": "images/Hints.png",
         "title": "Hints and Video Solution",
         "img_style": "width:120px; height:120px;"
     },
     {
-        "image": "images/doubt.png",
+        "image": "images/Doubt.png",
         "title": "Doubt Support by Coders",
         "img_style": "width:120px; height:120px;"
     },
@@ -193,4 +193,5 @@ def index():
             offerings=offerings,
             placed_students=placed_students,
             companies=companies,
+
             faqs=faqs)
