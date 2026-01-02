@@ -24,7 +24,7 @@ notes = [
         "mind": "Notes_pdf/.pdf"
     },
     {
-        "name": "JavaScript",
+        "name": "Javascript",
         "image": "Notes/JavaScript.png",
         "full": "Notes_pdf/.pdf",
         "short": "Notes_pdf/.pdf",
@@ -73,7 +73,7 @@ notes = [
         "mind": "Notes_pdf/.pdf"
     },
     {
-        "name": "TypeScript",
+        "name": "Typescript",
         "image": "Notes/TypeScript.png",
         "full": "Notes_pdf/.pdf",
         "short": "Notes_pdf/.pdf",
@@ -115,7 +115,7 @@ notes = [
         "mind": "Notes_pdf/.pdf"
     },
     {
-        "name": "MySQL",
+        "name": "Mysql",
         "image": "Notes/MySQL.png",
         "full": "Notes_pdf/.pdf",
         "short": "Notes_pdf/.pdf",
@@ -146,4 +146,5 @@ notes = [
 
 @notes_bp.route('/notes')
 def notes_page():
+
     return render_template('notes.html',notes=notes)
