@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" 
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+            crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
+            integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"/>
+            
+    <title>Main Page</title>
+
+</head>
+<body>
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-3">
+        <div class="container py-2">
+            <a href="#" class="navbar-brand" style="font-weight: bold; font-size: 25px;">Begin2Code</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-4 justify-content-right">
+                <li class="nav-item dropdown mega-dropdown">
+                    <a class="nav-link dropdown-toggle mega-btn" href="#" data-bs-toggle="dropdown"
+                    style="font-size: 20px; font-weight: 700;"> Courses </a>
+
+    <!----------------------------------- MEGA MENU ------------------------------------>
+        <div class="dropdown-menu mega-menu p-4">
+            <div class="row">
+                <div class="col mega-grid">
+
+                    {% for course in courses %}
+                        <div class="mega-box">
+                            <a href="/courses">
+                                <i class="{{ course.icon }}" title="{{ course.name }}"></i>
+                                {{ course.name }}
+                            </a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    <!----------------------------------- END OF MEGA MENU ------------------------------------>
+            </li>
+                <li class="nav-item ms-3"><a class="nav-link" href="#offerings" style="font-size: 20px; font-weight: 700;">Offerings</a></li>
+                <li class="nav-item ms-3"><a class="nav-link" href="/notes" style="font-size: 20px; font-weight: 700;">Notes</a></li>
+                <li class="nav-item ms-3"><a class="nav-link" href="#results" style="font-size: 20px; font-weight: 700;">Results</a></li>
+                <li class="nav-item ms-3"><a class="nav-link" href="#faq's" style="font-size: 20px; font-weight: 700;">FAQ's</a></li>
+                </ul>
+            </div>
+
+            <div class="side">
+                <div class="icon" id="referralIcon"><i class="fa-solid fa-gift"></i></div>
+                <div class="icon" id="loginIcon"><i class="fa-solid fa-user"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= End Of Navbar =========================================== -->
+
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.jpg') }}" class="banner-img" alt="Banner">
+        <div class="banner-content">
+        </div>
+    </div>
+
+    <!-- ========================= Stats Boxes =========================================== -->
+
+    <div class="container-fluid py-5">
+        <div class="container">
+            <h1 class="fw-bold display-6 text-center mb-2">
+                A Platform Trusted by Students
+            </h1>
+
+            <h5 class="emotion text-center mb-4">
+                Begin2Code aims to transform not just through money,
+                but provide results with numbers & emotions!
+            </h5>
+
+            <div class="row row-cols-2 row-cols-md-4 g-3 justify-content-center">
+
+                {% for item in stats %}
+                    <div class="col">
+                        <div class="stats-box text-center {{ item.bg_class }}">
+                            <h2>{{ item.count }}</h2>
+                            <p>{{ item.label }}</p>
+
+                            <img src="{{ url_for('static', filename=item.image) }}"
+                                class="emoji" alt="{{ item.label }}">
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================== End of Stats =================================== -->
+
+    <section class="hero">
+        <div class="hero-text">
+            <h1 id="mainText">
+                Whatever your demand,<br>
+                you get on <span>Begin2Code</span>.
+            </h1>
+        </div>
+
+        <div class="hero-slider">
+            <div class="fade-left"></div>
+            <div class="icon-row row-left">
+                {% for icon in hero_icons_left %}
+                    <div class="code-icon">
+                        <i class="{{ icon }}"></i>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="icon-row row-right">
+                {% for icon in hero_icons_right %}
+                    <div class="code-icon">
+                        <i class="{{ icon }}"></i>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- ========================= End Of Stats Box =========================================== -->
+
+    <section class="learning-problems">
+        <h1>Learning <span>Problems</span> we've all faced</h1>
+        <div class="problem-row">
+            {% for problem in problems_row_1 %}
+                <div class="problem-pill">{{ problem }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="problem-row">
+            {% for problem in problems_row_2 %}
+                <div class="problem-pill">{{ problem }}</div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ========================== End of Problems ================================ -->
+
+    <div class="container-fluid py-5" id="offerings">
+        <div class="container">
+            <h1 class="fw-bold display-6 text-center mb-4">What's New</h1>
+
+            <div class="row row-3 row-cols-md-3 g-3 justify-content-center">
+
+                {% for item in offerings %}
+                <div class="col">
+                    <div class="card h-100 p-4 border-3 rounded-4 text-center bg-dark">
+                        <img src="{{ url_for('static', filename=item.image) }}"
+                            alt="{{ item.title }}"
+                            class="offer-img mb-3 mx-auto">
+                        <p class="fs-4 text-light">{{ item.title }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= End Of Whats New =========================================== -->
+
+    <div class="full-slider-section" id="results">
+        <h1 style="text-align:center; font-size:2.5rem; margin-bottom:30px;">Placed Students</h1>
+        <div class="slider">
+            <div class="slider-track">
+
+                {% for student in placed_students %}
+                <div class="slide">
+                    <img src="{{ url_for('static', filename=student.image) }}" 
+                         alt="{{ student.name }}">
+                    <div>
+                        <h4>{{ student.name }}</h4>
+                        <p>{{ student.role }}<br>@{{ student.company }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= End Of Slider =========================================== -->
+
+    <div class="container-fluid bg-light d-flex align-items-center justify-content-center" style="height: 100px;flex-direction: column;margin: auto;">
+        <h3 class="text-align: center"><strong>Students ❤️ Begin2Code</strong></h3>
+        <h5 class="text-align: center">Hear from Our Students</h5>
+    </div>
+
+    <div class="container-fluid py-2 bg-light"> 
+        <div class="container">
+            <div class="row row-md-3 row-cols-md-2 g-3 justify-content-center">
+                
+                <div class="col">
+                    <div class="review h-100 w-250 p-4 bg-light text-left" 
+                        style="border: 5px double rgb(62, 137, 183); position: relative;">
+                        <img src="{{ url_for('static', filename='images/user1.png') }}" class="review-img">
+                        <p style="font-size: 14px;"> 
+                            <div class="stars">★★★★★</div><br>
+                            ❛❛ The Platform helped me build strong fundamentals in programming concepts, which allowed me to improve
+                            steadily and write efficient code with confidence. The regular practice tasks, coding challenges, and quick
+                            revision resources strengthened my problem-solving speed, while the structured guidance kept me on the right 
+                            learning path. Step by step, I noticed a clear improvement in my coding logic, debugging skills, and overall 
+                            discipline in learning ❜❜ 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="review h-100 w-250 p-4 bg-light text-Left" 
+                    style="border: 5px double #08BD80; position: relative;">
+                        <img src="{{ url_for('static', filename='images/user2.png') }}" class="review-img">
+                        <p style="font-size: 14px;">
+                            <div class="stars">★★★★★</div><br> 
+                            ❛❛ This Platform helped me overcome my fear of coding and develop a more confident, structured approach to problem-solving. 
+                              The constant guidance and encouragement made a real difference in how I learn and think as a developer. ❜❜
+                        </p> 
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="review h-100 w-250 p-4 bg-light text-left" 
+                    style="border: 5px double rgb(62, 137, 183); position: relative;">
+                        <img src="{{ url_for('static', filename='images/user3.png') }}" class="review-img">
+                        <p style="font-size: 14px;"> 
+                            <div class="stars">★★★★</div><br>
+                            ❛❛ When I began learning to code, even basic concepts felt confusing and overwhelming. The simple explanations and 
+                            supportive learning environment helped me stay calm and curious instead of frustrated. As I completed small tasks 
+                            and projects, my confidence grew naturally, and learning started to feel rewarding. 
+                            Over time, my way of thinking evolved, and I became more comfortable breaking down problems ❜❜
+                        </p>  
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="review h-100 w-250 p-4 bg-light text-left" 
+                    style="border: 5px double #08BD80; position: relative;">
+                        <img src="{{ url_for('static', filename='images/user4.png') }}" class="review-img">
+                        <p style="font-size: 14px;"> 
+                            <div class="stars">★★★★</div><br>
+                            ❛❛ At a time when I felt uncertain about my learning direction, this platform helped me bring structure and purpose 
+                            to my journey. Each lesson added clarity and encouraged me to keep moving forward. Beyond technical skills, it 
+                            helped me rebuild self-belief, develop consistency, and approach challenges with confidence. 
+                            The growth I experienced—both in my skills and in my mindset—made this learning experience truly meaningful.. ❜❜
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================= End Of Reviews =========================================== -->
+
+    <section class="company-slider-section">
+        <h2 style="text-align:center; font-size:2rem; margin-bottom:20px;">
+            <strong>Trusted By Leading Companies</strong>
+        </h2>
+        <div class="company-slider-wrapper">
+            <div class="company-slider-track">
+
+                {% for company in companies %}
+                <div class="company-slide">
+                    <img src="{{ url_for('static', filename=company.image) }}" 
+                         alt="{{ company.alt }}">
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+<!-- ========================= End Of Company Slider =========================================== -->
+
+<!-- ======================== Accordian ================================================= -->
+    <div class="container-fluid" id="faq's">
+        <h2 class="text-center mb-4 mt-5" style="font-weight: 700;">Frequently Asked Questions (FAQs)</h2>
+        <div class="accordion" id="accordionExample" style="margin-left: 10%; margin-right: 10%;">
+            
+            {% for faq in faqs %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button {% if not loop.first %}collapsed{% endif %}" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#collapse{{ loop.index }}" 
+                            aria-expanded="{% if loop.first %}true{% else %}false{% endif %}" 
+                            aria-controls="collapse{{ loop.index }}">
+                        <strong>{{ faq.question }}</strong>
+                    </button>
+                </h2>
+                <div id="collapse{{ loop.index }}" 
+                    class="accordion-collapse collapse {% if loop.first %}show{% endif %}" 
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+<!-- ========================= End Of FAQ's =========================================== -->
+
+<!-- ========================= Foooter =========================================== -->
+<footer>
+<section class="footer-hero">
+    <div class="footer-hero-top"></div>
+        <div class="footer-hero-bottom"></div>
+        <div class="footer-logo-wrap">
+            <div class="footer-logo-circle">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="">
+            </div>
+    </div>
+</section>
+
+<section class="footer-bottom-area">
+    <div class="footer-lists">
+        <ul class="footer-list">
+          <h3>Company</h3>
+            <a href=""><li>About Us</li></a>
+            <a href=""><li>Conatct Us</li></a>
+            <a href=""><li>Carrers</li></a> 
+            <a href=""><li>Updates</li></a>
+            <a href=""><li>Account Deletion</li></a>
+        </ul>
+
+        <ul class="footer-list">
+          <h3>Categories</h3>
+            <a href="/courses"><li>Software Developer</li></a>
+            <a href="/courses"><li>Frontend Developer</li></a>
+            <a href="/courses"><li>Backend Developer</li></a> 
+            <a href="/courses"><li>Java Developer</li></a>
+            <a href="/courses"><li>Python Developer</li></a>
+        </ul>
+
+        <ul class="footer-list">
+          <h3>Other Categories</h3>
+          <a href="/courses"><li>Full Stack Developer</li></a>
+          <a href="/courses"><li>Game Developer</li></a>
+          <a href="/courses"><li>UI/UX Designer</li></a>
+          <a href="/courses"><li>Web Developer</li></a>
+          <a href="/courses"><li>Mobile Developer</li></a>
+        </ul>
+
+        <ul class="footer-list">
+          <h3>Connect With Us</h3>
+            <a href=""><li>Email Us</li></a>
+            <a href=""><li>Talk To a Counsellor</li></a>
+        </ul>
+
+        <ul class="footer-list">
+          <h3>Quick Links</h3>
+            <a href="/courses"><li>Start Upskilling</li></a>
+            <a href="/notes"><li>Notes</li></a>
+            <a href=""><li>Certifications</li></a>
+        </ul>
+
+        <ul class="footer-list follow-us">
+          <li>Follow Us</li>
+          <li><i class="fa-brands fa-youtube"></i> YouTube</li>
+          <li><i class="fa-brands fa-instagram"></i> Instagram</li>
+          <li><i class="fa-brands fa-facebook"></i> Facebook</li>
+          <li><i class="fa-brands fa-telegram"></i> Telegram</li>
+          <li><i class="fa-brands fa-linkedin"></i> LinkedIn</li>
+        </ul>
+
+        <div class="footer-bottom-row">
+            <div class="footer-bottom-links">
+                <a href="/cookies">Privacy Policy</a><span>|</span>
+                <a href="/terms_condition">Terms of Use</a>
+            </div>
+            <div>Copyright © 2025 Begin2Code Limited. All rights reserved.</div>
+        </div>
+    </div>
+</section>
+</footer>
+
+<!-- ========================= Login Modal ================================= -->
+<div class="modal fade" id="login" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================= Referal Modal ================================= -->
+ <div class="modal fade" id="Referal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
