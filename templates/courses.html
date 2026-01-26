@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Begin2Code – Courses</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3" href="{{ url_for('index') }}">Begin2Code</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="nav">
+            <ul class="navbar-nav ms-auto">
+                {% for section in courses.keys() %}
+                <li class="nav-item ms-3 fs-5">
+                    <a class="nav-link" href="#{{ section|replace(' ', '') }}">{{ section }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="carousel slide" id="cIndicators" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="3000" >
+            <img src="/static/carousel/1.png" class="d-block w-100" alt="Slide 1" style="height: 380px;">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="/static/carousel/2.png" class="d-block w-100" alt="Slide 2" style="height: 380px;">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="/static/carousel/3.png" class="d-block w-100" alt="Slide 3" style="height: 350px;">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="/static/carousel/4.png" class="d-block w-100" alt="Slide 4" style="height: 360px;">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="/static/carousel/5.png" class="d-block w-100" alt="Slide 5" style="height: 320px;">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+            <img src="/static/carousel/6.png" class="d-block w-100" alt="Slide 6" style="height: 320px;">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#cIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#cIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+{% for category, cat_courses in courses.items() %}
+<section id="{{ category|replace(' ', '') }}" class="container my-5">
+    <h2 class="section-title">{{ category }}</h2>
+
+    <div class="row g-4 justify-content-center">
+        {% for course in cat_courses %}
+
+        <div class="col-6 col-lg-3 d-flex justify-content-center course-card" data-name="{{ course.name|lower }}">
+            <div class="Skill-container">
+                {% if course.icon %}
+                <div class="icon-box"><i class="{{ course.icon }}"></i></div>
+                {% endif %}
+
+                {% if course.badge %}
+                <span class="lang-badge bg-success text-white">{{ course.badge }}</span>
+                {% endif %}
+                
+                <div class="content-box">
+                    <h3>{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
+
+                    {% if course.techs %}
+                    <div class="tech-icons mt-2">
+                        {% for tech in course.techs %}
+                        <i class="{{ tech.class }}" title="{{ tech.name }}"></i>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <button class="explore mt-3" onclick="openCourseModal({{ course.id }}, '{{ course.name }}', {{ course.price }})">
+                        Explore
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+
+<!-- FOOTER -->
+<footer>© 2025 Begin2Code. All Rights Reserved.</footer>
+
+<div class="course-modal" id="courseModal">
+    <div class="modal-container">
+        <div class="modal-header-custom">
+            <h2 id="courseModalTitle">Course Name</h2>
+            <button class="close-modal" onclick="closeCourseModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body-custom">
+            <div class="modules-section">
+                <h3>Course Modules</h3>
+                <div id="modulesList">
+                </div>
+            </div>
+
+            <div class="pricing-section">
+                <div class="price-card">
+                    <div class="price-label">Course Fee</div>
+                    <div class="price-amount" id="coursePrice">₹4999</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>Language</h4>
+                    </div>
+                    <div class="language-pills">
+                        <div class="language-pill active" onclick="selectLanguage(this)">Hindi</div>
+                        <div class="language-pill" onclick="selectLanguage(this)">English</div>
+                        <div class="language-pill" onclick="selectLanguage(this)">Hinglish</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-user-tie"></i>
+                        <h4>Know Your Teachers</h4>
+                    </div>
+                    <div class="teacher-item">
+                        <div class="teacher-avatar">RS</div>
+                        <div class="teacher-info">
+                            <h5>Rahul Sharma</h5>
+                            <p>8+ years Experience</p>
+                        </div>
+                    </div>
+                    <div class="teacher-item">
+                        <div class="teacher-avatar">PP</div>
+                        <div class="teacher-info">
+                            <h5>Priya Patel</h5>
+                            <p>6+ years Experience</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h4>Batch Timeline</h4>
+                    </div>
+                    <div class="timeline-item start">
+                        <span class="timeline-label">Start Date</span>
+                        <span class="timeline-date">Feb 1, 2026</span>
+                    </div>
+                    <div class="timeline-item end">
+                        <span class="timeline-label">End Date</span>
+                        <span class="timeline-date">May 30, 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer-custom">
+            <button class="buy-btn" onclick="purchaseCourse()">
+                Buy Now - <span id="footerPrice">₹4999</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentCourseId = null;
+    let currentCoursePrice = null;
+
+    const moduleNames = [
+        "Fundamentals",
+        "Advanced Concepts", 
+        "Project Building",
+        "Backend Development",
+        "Database Integration",
+        "Deployment",
+        "Best Practices"
+    ];
+
+    function openCourseModal(courseId, courseName, price) {
+        currentCourseId = courseId;
+        currentCoursePrice = price;
+
+        document.getElementById('courseModalTitle').textContent = courseName;
+        document.getElementById('coursePrice').textContent = '₹' + price;
+        document.getElementById('footerPrice').textContent = '₹' + price;
+
+        const modulesList = document.getElementById('modulesList');
+        modulesList.innerHTML = '';
+
+        moduleNames.forEach((moduleName, index) => {
+            const isLocked = index > 0;
+            const moduleHtml = `
+                <div class="module-item ${isLocked ? 'locked' : ''}" id="module-${index}">
+                    <div class="module-header ${index === 0 ? 'active' : ''}" onclick="toggleModule(${index}, ${!isLocked})">
+                        <span class="module-title">${moduleName}</span>
+                        <div class="module-icons">
+                            ${isLocked ? '<i class="fas fa-lock lock-icon"></i>' : '<i class="fas fa-chevron-down chevron-icon"></i>'}
+                        </div>
+                    </div>
+                    ${!isLocked ? `
+                    <div class="module-content ${index === 0 ? 'open' : ''}" id="content-${index}">
+                        <ul>
+                            <li>Introduction to ${moduleName}</li>
+                            <li>Key Concepts and Theory</li>
+                            <li>Practical Implementation</li>
+                            <li>Hands-on Projects</li>
+                        </ul>
+                    </div>` : ''}
+                </div>
+            `;
+            modulesList.innerHTML += moduleHtml;
+        });
+
+        document.getElementById('courseModal').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCourseModal() {
+        document.getElementById('courseModal').classList.remove('show');
+        document.body.style.overflow = 'auto';
+        currentCourseId = null;
+        currentCoursePrice = null;
+    }
+
+    function toggleModule(index, canToggle) {
+        if (!canToggle) return;
+
+        const content = document.getElementById(`content-${index}`);
+        const header = document.querySelector(`#module-${index} .module-header`);
+        const chevron = header.querySelector('.chevron-icon');
+
+        document.querySelectorAll('.module-content').forEach((c, i) => {
+            if (i !== index) {
+                c.classList.remove('open');
+                const h = document.querySelector(`#module-${i} .module-header`);
+                if (h) h.classList.remove('active');
+                const ch = h ? h.querySelector('.chevron-icon') : null;
+                if (ch) ch.classList.remove('rotated');
+            }
+        });
+
+        content.classList.toggle('open');
+        header.classList.toggle('active');
+        if (chevron) chevron.classList.toggle('rotated');
+    }
+
+    function selectLanguage(element) {
+        document.querySelectorAll('.language-pill').forEach(pill => {
+            pill.classList.remove('active');
+        });
+        element.classList.add('active');
+    }
+
+    function purchaseCourse() {
+        if (!currentCourseId) {
+            showToast('Course not selected', 'error');
+            return;
+        }
+
+        fetch('/buy-course', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ course_id: currentCourseId })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Network error');
+            return response.json();
+        })
+        .then(data => {
+            if (data.require_login) {
+                showToast(data.message, 'warning');
+                closeCourseModal();
+                setTimeout(() => openLogin(), 500);
+                return;
+            }
+            
+            if (data.low_balance) {
+                showToast(data.message, 'error');
+                return;
+            }
+            
+            if (data.success) {
+                showToast(data.message + ' Remaining coins: ' + data.remaining_coins, 'success');
+                closeCourseModal();
+                
+                const coinsElement = document.getElementById('userCoins');
+                if (coinsElement) {
+                    coinsElement.textContent = data.remaining_coins;
+                }
+                
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                showToast(data.message, 'error');
+            }
+        })
+        .catch(error => {
+            showToast('Failed to process purchase. Please try again.', 'error');
+            console.error('Purchase error:', error);
+        });
+    }
+
+    document.getElementById('courseModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeCourseModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeCourseModal();
+        }
+    });
+</script>
+
+</body>
+</html>
