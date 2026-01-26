@@ -17,7 +17,10 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
 app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
-app.config['MAIL_DEFAULT_SENDER'] = ('Begin2Code', 'begincode7@gmail.com')
+app.config['MAIL_DEFAULT_SENDER'] = (
+    "Begin2Code",
+    os.getenv("MAIL_USERNAME")
+)
 mail = Mail(app)
 
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
@@ -256,4 +259,5 @@ def internal_error(e):
     return render_template("index.html"), 500
 
 if __name__ == "__main__":
+
     app.run(debug=os.getenv("FLASK_DEBUG") == "True")
