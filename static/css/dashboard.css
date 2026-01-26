@@ -1,0 +1,269 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+
+:root {
+        --gradient-bg: linear-gradient(135deg, #ffd89b 0%, #ffc0cb 50%, #e0c3fc 100%);
+        --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+        body {
+            background: var(--gradient-bg);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        .sidebar {
+            background: white;
+            height: calc(100vh - 56px);
+            position: sticky;
+            top: 56px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .nav-link {
+            color: #4b5563;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: var(--gradient-primary);
+            color: white !important;
+        }
+
+        .nav-link i {
+            width: 20px;
+        }
+
+        .course-card,
+        .Skill-container {
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            height: 100%;
+        }
+
+        .course-card:hover,
+        .Skill-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-icon,
+        .icon-box {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-box {
+            text-align: center;
+            color: #3b82f6;
+        }
+
+        .progress {
+            height: 8px;
+            border-radius: 50px;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+        }
+
+        .btn-gradient {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-gradient:hover {
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .streak-pill {
+            background: #ffedd5;
+            color: #b45309;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .streak-day.active {
+            background: #f97316;
+        }
+
+        .module-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+        }
+
+        .badge-coins {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        .resource-icon {
+            width: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .resource-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-section h2 {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color:
+                transparent;
+            background-clip: text;
+        }
+
+        .Notes-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 250px;
+            border: 2px solid #e5e7eb;
+        }
+
+        .image-box {
+            width: 100%;
+            height: 100%;
+        }
+
+        .notes-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .note-badge {
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .note-badge:hover {
+            transform: scale(1.1);
+            color: #fbbf24;
+        }
+
+        .tech-icons i {
+            margin: 0 5px;
+            font-size: 1.2rem;
+        }
+
+        .Skill-container {
+            background: white;
+            border-color: #e5e7eb;
+        }
+
+        .lang-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        .explore {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+        }
+
+        .explore:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .icon {
+            background-color: rgb(62, 137, 183);
+            border-radius: 12%;
+            color: white;
+            font-size: 0.95rem;
+            padding: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 0rem;
+            margin-left: 7px;
+        }
+
+        .icon a{
+            color: white;
+            text-decoration: none;
+        }
+
+        .icon:hover {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .user-coins {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #92400e;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 2px solid #f59e0b;
+        }
+
+        .user-coins i {
+            font-size: 18px;
+        }
