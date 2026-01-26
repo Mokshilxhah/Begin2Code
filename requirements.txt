@@ -1,4 +1,6 @@
 Flask
-gunicorn
-mysql-connector-python
+flask-mail
 python-dotenv
+werkzeug
+supabase
+gunicorn
