@@ -1,10 +1,32 @@
 <p align="center">
-  <marquee behavior="scroll" direction="left" scrollamount="6">
-    <b style="font-size:28px; color:#0d6efd;">
-      Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code
-    </b>
-  </marquee>
+  <svg width="100%" height="48" viewBox="0 0 1200 48" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .text {
+        font-family: 'Inter', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        fill: #0d6efd;
+      }
+      .move {
+        animation: slide 18s linear infinite;
+      }
+      @keyframes slide {
+        from { transform: translateX(0); }
+        to { transform: translateX(-600px); }
+      }
+    </style>
+
+    <g class="move">
+      <text x="0" y="32" class="text">
+        Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;
+      </text>
+      <text x="600" y="32" class="text">
+        Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;
+      </text>
+    </g>
+  </svg>
 </p>
+>
 
 
 <p align="center">
