@@ -3,7 +3,7 @@ import os
 
 resend.api_key = os.getenv('RESEND_API_KEY')
 
-SENDER_EMAIL = "noreply@begin2code.com.com"
+SENDER_EMAIL = "begincode7@gmail.com"
 SENDER_NAME = "Begin2Code"
 
 def send_verification_email(recipient_email, otp):
@@ -447,3 +447,4 @@ def forgot_password(recipient_email, name):
     except Exception as e:
         print(f"Resend API Error: {e}")
         raise e
+
