@@ -1,16 +1,18 @@
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=JetBrains+Mono&weight=600&size=26&pause=900&color=0D6EFD&center=true&vCenter=true&width=1000&lines=Begin2Code+—+Production-Grade+EdTech+Platform;Full-Stack+Flask+Application+%7C+Cloud+Deployed;Authentication+•+Courses+•+Emails+•+Dashboards" />
-</p>
+<div align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=31859C&center=true&vCenter=true&width=1000&lines=Begin2Code;Learn+Coding+From+Scratch;Interactive+Learning+Platform" alt="Typing SVG" />
+</div>
 
-<p align="center">
-  <a href="https://begin2code.onrender.com"><b>🌐 Live Application</b></a>
-</p>
+<div align="center">
 
----
+[![Deployed on Render](https://img.shields.io/badge/Deployed-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://begin2code.onrender.com)
+[![Database](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
+[![Email](https://img.shields.io/badge/Email-Brevo-00A4BD?style=for-the-badge&logo=brevo&logoColor=white)](https://www.brevo.com)
+
+</div>
 
 ## ⚡ What is Begin2Code?
 
-**Begin2Code** is a **cloud-deployed EdTech platform** engineered to simulate a real-world learning product — covering **authentication, structured course delivery, transactional emails, dashboards, and scalable backend design**.
+**Begin2Code** is a **cloud-deployed EdTech platform** engineered to simulate a real-world learning product — covering **authentication, structured course delivery, emails, dashboards, and scalable backend design**.
 
 This project is not a demo app — it is built with **deployment constraints, production configuration, and interview-level system design** in mind.
 
@@ -18,11 +20,13 @@ This project is not a demo app — it is built with **deployment constraints, pr
 
 ## ☁️ Deployment & Infrastructure
 
+<div align="center"></div>
+
 | Layer | Platform | Reason |
-|-----|--------|--------|
-| Backend Hosting | **Render** | Zero-ops Flask deployment |
+|-------|----------|--------|
+| Backend Hosting | **Render** | Flask deployment |
 | Database | **Supabase (PostgreSQL)** | Managed, scalable, secure |
-| Email | **Brevo SMTP** | Reliable transactional emails |
+| Email | **Brevo SMTP** | Reliable Emails |
 
 ---
 
@@ -38,10 +42,10 @@ This project is not a demo app — it is built with **deployment constraints, pr
 
 ---
 
-## 🧰 Tech Stack (Compact View)
+## 🧰 Tech Stack
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=python,flask,postgresql,html,css,js,bootstrap,git,github" height="36"/>
+  <img src="https://skillicons.dev/icons?i=python,flask,postgresql,html,css,js,bootstrap,git,github,supabase,render" height="42"/>
 </p>
 
 ---
@@ -49,49 +53,64 @@ This project is not a demo app — it is built with **deployment constraints, pr
 ## 🚀 Functional Capabilities
 
 ### 👤 User System
-- Register / Login / Logout
-- Email OTP verification
-- Secure session handling
+- ✅ Register & Login
+- ✅ Email OTP verification
+- ✅ Secure Session handling
+- ✅ Password Reset flow
 
 ### 📚 Learning Platform
-- Course catalog
-- Module-wise structured content
-- Notes & learning resources
-- Purchase flow with confirmation email
+- ✅ Course Catalog browsing
+- ✅ Module-wise Structured Content
+- ✅ Notes & learning resources
+- ✅ Purchase flow with confirmation email
 
 ### 📧 Email Engine
-- Custom-designed HTML emails
-- OTP delivery
-- Course purchase confirmation
-- SMTP-based (Brevo)
+- ✅ Custom-designed HTML emails
+- ✅ OTP delivery (real-time)
+- ✅ Course purchase Confirmation
+- ✅ Production SMTP (Brevo)
 
 ### 📊 Dashboard
-- Personalized user dashboard
-- Purchased courses tracking
-- Clean route separation
+- ✅ Personalized user dashboard
+- ✅ Purchased courses tracking
+- ✅ Progress visualization
+- ✅ Clean route separation
+
+---
+🚀 60-Second Setup
+- git clone https://github.com/Mokshilxhah/Begin2Code.git
+- cd Begin2Code
+- pip install -r requirements.txt
+- cp .env.example .env
+-  Add your Supabase + Brevo keys
+- flask run --debug
 
 ---
 
-## 🏗️ Architecture Snapshot
-Flask App
-├── Blueprints (auth, dashboard)
-├── Service Layer (email)
-├── Supabase PostgreSQL
-├── HTML/Jinja Templates
-└── Cloud Deployment (Render)
+## 📌 Future Add-Ons
+- Full **mobile responsiveness**  
+- Dynamic product rendering  
+- Interactive Animations  
+- Working on Edge Cases
+- Adding Real Contents
+- Personal Code Editors  
 
 ---
 
-## 🎯 Why This Project Stands Out (Interview POV)
-
-- Uses **real SMTP infrastructure**, not mock email
-- Handles **cloud DB + backend hosting separation**
-- Clean separation of concerns (routes, services, data)
-- Designed under **free-tier production constraints**
-- Demonstrates backend decision-making, not just features
+## ⚠️ Disclaimer
+This is a **prototype version**, so it may not be fully mobile responsive yet.  
 
 ---
 
-<p align="center">
-  <sub>Mokshil Shah</sub>
-</p>
+## 🧑‍💻 Connect With Me  
+
+Let’s build something meaningful together 💬  
+
+- 📧 **Email:** [mokshilshah000@gmail.com](mailto:mokshilshah000@gmail.com)    
+- 🧑‍💻 **GitHub:** [github.com/Mokshilxhah](https://github.com/Mokshilxhah)  
+- 🧩 **LeetCode:** [leetcode.com/u/Mokshil_xhah](https://leetcode.com/u/Mokshil_xhah)  
+
+---
+
+MIT License — Free to use, modify, distribute
+© 2026 Mokshil Shah
