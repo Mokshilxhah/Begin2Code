@@ -64,6 +64,7 @@ def dashboard():
         notes=NOTES,
         modules=MODULES_DATA,
         my_courses=my_courses,
+        purchased_courses=[uc["course_id"] for uc in user_courses_db],
         user_email=user["email"],
         user_name=user["name"],
         user_coins=user["coins"],
@@ -210,7 +211,7 @@ def save_notes_route():
     course_id = int(request.json.get("course_id"))
     module_id = request.json.get("module_id")
     chapter_name = request.json.get("chapter_name")
-    note_text = request.json.get("note_text")
+    note_text = request.json.get("note_text") or request.json.get("notes_content")
     
     note_key = f"{course_id}-{module_id}-{chapter_name}"
     
@@ -261,6 +262,28 @@ def mark_complete():
     
     user_id = session.get("user_id")
     course_id = int(request.json.get("course_id"))
+    chapter_key = request.json.get("chapter_key") 
+    
+    activity = db.get_user_activity(user_id, course_id)
+    completed_chapters = activity["saved_notes"].get("_completed", [])
+    
+    if chapter_key in completed_chapters:
+        return jsonify({
+            "success": False,
+            "message": "Chapter already completed"
+        })
+    
+    completed_chapters.append(chapter_key)
+    activity["saved_notes"]["_completed"] = completed_chapters
+    
+    import json
+    db.update("user_activity",
+        {"saved_notes": json.dumps(activity["saved_notes"])},
+        {
+            "user_id": f"eq.{user_id}",
+            "course_id": f"eq.{course_id}"
+        }
+    )
     
     current_progress = db.get_course_progress(user_id, course_id)
     new_progress = min(current_progress + 2, 100)
@@ -270,5 +293,5 @@ def mark_complete():
     return jsonify({
         "success": True, 
         "progress": new_progress,
-        "message": f"Progress updated to {new_progress}%"
+        "message": f"Chapter marked complete! Progress: {new_progress}%"
     })
