@@ -3,13 +3,14 @@ import os
 
 resend.api_key = os.getenv('RESEND_API_KEY')
 
-SENDER_EMAIL = "begincode7@gmail.com"
+SENDER_EMAIL = "onboarding@resend.dev"
 SENDER_NAME = "Begin2Code"
 
 def send_verification_email(recipient_email, otp):
     try:
         resend.Emails.send({
             "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
+            "reply_to": "begincode7@gmail.com",
             "to": recipient_email,
             "subject": "Begin2Code - Email Verification Code",
             "html": f"""
@@ -47,6 +48,7 @@ def send_welcome_email(recipient_email, name):
     try:
         resend.Emails.send({
             "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
+            "reply_to": "begincode7@gmail.com",
             "to": recipient_email,
             "subject": "Welcome to Begin2Code — Your Learning Journey Starts Here",
             "html": f"""
@@ -183,6 +185,7 @@ def send_course_purchase_email(recipient_email, name, course_name, course_price)
     try:
         resend.Emails.send({
             "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
+            "reply_to": "begincode7@gmail.com",
             "to": recipient_email,
             "subject": f"Course Purchased Successfully - {course_name}",
             "html": f"""
@@ -339,6 +342,7 @@ def forgot_password(recipient_email, name):
     try:
         resend.Emails.send({
             "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
+            "reply_to": "begincode7@gmail.com",
             "to": recipient_email,
             "subject": "Your Begin2Code Password Was Changed 🔐",
             "html": f"""
@@ -447,4 +451,3 @@ def forgot_password(recipient_email, name):
     except Exception as e:
         print(f"Resend API Error: {e}")
         raise e
-
