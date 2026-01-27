@@ -10,8 +10,159 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- ✅ MOVE SCRIPTS TO HEAD -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <!-- ✅ DEFINE MODAL FUNCTIONS IN HEAD -->
+    <script>
+        let currentCourseId = null;
+        let currentCoursePrice = null;
+
+        const moduleNames = [
+            "Fundamentals",
+            "Advanced Concepts", 
+            "Project Building",
+            "Backend Development",
+            "Database Integration",
+            "Deployment",
+            "Best Practices"
+        ];
+
+        function openCourseModal(courseId, courseName, price) {
+            currentCourseId = courseId;
+            currentCoursePrice = price;
+
+            document.getElementById('courseModalTitle').textContent = courseName;
+            document.getElementById('coursePrice').textContent = '₹' + price;
+            document.getElementById('footerPrice').textContent = '₹' + price;
+
+            const modulesList = document.getElementById('modulesList');
+            modulesList.innerHTML = '';
+
+            moduleNames.forEach((moduleName, index) => {
+                const isLocked = index > 0;
+                const moduleHtml = `
+                    <div class="module-item ${isLocked ? 'locked' : ''}" id="module-${index}">
+                        <div class="module-header ${index === 0 ? 'active' : ''}" onclick="toggleModule(${index}, ${!isLocked})">
+                            <span class="module-title">${moduleName}</span>
+                            <div class="module-icons">
+                                ${isLocked ? '<i class="fas fa-lock lock-icon"></i>' : '<i class="fas fa-chevron-down chevron-icon"></i>'}
+                            </div>
+                        </div>
+                        ${!isLocked ? `
+                        <div class="module-content ${index === 0 ? 'open' : ''}" id="content-${index}">
+                            <ul>
+                                <li>Introduction to ${moduleName}</li>
+                                <li>Key Concepts and Theory</li>
+                                <li>Practical Implementation</li>
+                                <li>Hands-on Projects</li>
+                            </ul>
+                        </div>` : ''}
+                    </div>
+                `;
+                modulesList.innerHTML += moduleHtml;
+            });
+
+            document.getElementById('courseModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCourseModal() {
+            document.getElementById('courseModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+            currentCourseId = null;
+            currentCoursePrice = null;
+        }
+
+        function toggleModule(index, canToggle) {
+            if (!canToggle) return;
+
+            const content = document.getElementById(`content-${index}`);
+            const header = document.querySelector(`#module-${index} .module-header`);
+            const chevron = header.querySelector('.chevron-icon');
+
+            document.querySelectorAll('.module-content').forEach((c, i) => {
+                if (i !== index) {
+                    c.classList.remove('open');
+                    const h = document.querySelector(`#module-${i} .module-header`);
+                    if (h) h.classList.remove('active');
+                    const ch = h ? h.querySelector('.chevron-icon') : null;
+                    if (ch) ch.classList.remove('rotated');
+                }
+            });
+
+            content.classList.toggle('open');
+            header.classList.toggle('active');
+            if (chevron) chevron.classList.toggle('rotated');
+        }
+
+        function selectLanguage(element) {
+            document.querySelectorAll('.language-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        function purchaseCourse() {
+            if (!currentCourseId) {
+                showToast('Course not selected', 'error');
+                return;
+            }
+
+            fetch('/buy-course', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ course_id: currentCourseId })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network error');
+                return response.json();
+            })
+            .then(data => {
+                if (data.require_login) {
+                    showToast(data.message, 'warning');
+                    closeCourseModal();
+                    sessionStorage.setItem('intended_url', '/courses');
+                    setTimeout(() => openLogin(), 500);
+                    return;
+                }
+                
+                if (data.low_balance) {
+                    showToast(data.message, 'error');
+                    return;
+                }
+                
+                if (data.success) {
+                    showToast(data.message + ' Remaining coins: ' + data.remaining_coins, 'success');
+                    closeCourseModal();
+                    setTimeout(() => window.location.href = '/dashboard', 1500);
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showToast('Failed to process purchase. Please try again.', 'error');
+                console.error('Purchase error:', error);
+            });
+        }
+
+        // Event listeners - wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('courseModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeCourseModal();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeCourseModal();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -105,7 +256,6 @@
 </section>
 {% endfor %}
 
-<!-- FOOTER -->
 <footer>© 2025 Begin2Code. All Rights Reserved.</footer>
 
 <!-- COURSE DETAIL MODAL -->
@@ -194,7 +344,6 @@
     <div class="login-box">
         <div class="login-card" id="loginCard">
 
-            <!-- Login Face -->
             <div class="card-face login-face">
                 <button class="close-btn" onclick="closeLogin()">×</button>
 
@@ -220,7 +369,6 @@
                 </div>
             </div>
 
-            <!-- Register Face -->
             <div class="card-face register-face">
                 <button class="close-btn" onclick="closeLogin()">×</button>
 
@@ -279,153 +427,6 @@
         </div>
     </div>
 </div>
-
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-<script>
-    let currentCourseId = null;
-    let currentCoursePrice = null;
-
-    const moduleNames = [
-        "Fundamentals",
-        "Advanced Concepts", 
-        "Project Building",
-        "Backend Development",
-        "Database Integration",
-        "Deployment",
-        "Best Practices"
-    ];
-
-    function openCourseModal(courseId, courseName, price) {
-        currentCourseId = courseId;
-        currentCoursePrice = price;
-
-        document.getElementById('courseModalTitle').textContent = courseName;
-        document.getElementById('coursePrice').textContent = '₹' + price;
-        document.getElementById('footerPrice').textContent = '₹' + price;
-
-        const modulesList = document.getElementById('modulesList');
-        modulesList.innerHTML = '';
-
-        moduleNames.forEach((moduleName, index) => {
-            const isLocked = index > 0;
-            const moduleHtml = `
-                <div class="module-item ${isLocked ? 'locked' : ''}" id="module-${index}">
-                    <div class="module-header ${index === 0 ? 'active' : ''}" onclick="toggleModule(${index}, ${!isLocked})">
-                        <span class="module-title">${moduleName}</span>
-                        <div class="module-icons">
-                            ${isLocked ? '<i class="fas fa-lock lock-icon"></i>' : '<i class="fas fa-chevron-down chevron-icon"></i>'}
-                        </div>
-                    </div>
-                    ${!isLocked ? `
-                    <div class="module-content ${index === 0 ? 'open' : ''}" id="content-${index}">
-                        <ul>
-                            <li>Introduction to ${moduleName}</li>
-                            <li>Key Concepts and Theory</li>
-                            <li>Practical Implementation</li>
-                            <li>Hands-on Projects</li>
-                        </ul>
-                    </div>` : ''}
-                </div>
-            `;
-            modulesList.innerHTML += moduleHtml;
-        });
-
-        document.getElementById('courseModal').classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeCourseModal() {
-        document.getElementById('courseModal').classList.remove('show');
-        document.body.style.overflow = 'auto';
-        currentCourseId = null;
-        currentCoursePrice = null;
-    }
-
-    function toggleModule(index, canToggle) {
-        if (!canToggle) return;
-
-        const content = document.getElementById(`content-${index}`);
-        const header = document.querySelector(`#module-${index} .module-header`);
-        const chevron = header.querySelector('.chevron-icon');
-
-        document.querySelectorAll('.module-content').forEach((c, i) => {
-            if (i !== index) {
-                c.classList.remove('open');
-                const h = document.querySelector(`#module-${i} .module-header`);
-                if (h) h.classList.remove('active');
-                const ch = h ? h.querySelector('.chevron-icon') : null;
-                if (ch) ch.classList.remove('rotated');
-            }
-        });
-
-        content.classList.toggle('open');
-        header.classList.toggle('active');
-        if (chevron) chevron.classList.toggle('rotated');
-    }
-
-    function selectLanguage(element) {
-        document.querySelectorAll('.language-pill').forEach(pill => {
-            pill.classList.remove('active');
-        });
-        element.classList.add('active');
-    }
-
-    function purchaseCourse() {
-        if (!currentCourseId) {
-            showToast('Course not selected', 'error');
-            return;
-        }
-
-        fetch('/buy-course', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ course_id: currentCourseId })
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Network error');
-            return response.json();
-        })
-        .then(data => {
-            if (data.require_login) {
-                showToast(data.message, 'warning');
-                closeCourseModal();
-                sessionStorage.setItem('intended_url', '/courses');
-                setTimeout(() => openLogin(), 500);
-                return;
-            }
-            
-            if (data.low_balance) {
-                showToast(data.message, 'error');
-                return;
-            }
-            
-            if (data.success) {
-                showToast(data.message + ' Remaining coins: ' + data.remaining_coins, 'success');
-                closeCourseModal();
-                setTimeout(() => window.location.href = '/dashboard', 1500);
-            } else {
-                showToast(data.message, 'error');
-            }
-        })
-        .catch(error => {
-            showToast('Failed to process purchase. Please try again.', 'error');
-            console.error('Purchase error:', error);
-        });
-    }
-
-    document.getElementById('courseModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeCourseModal();
-        }
-    });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeCourseModal();
-        }
-    });
-</script>
 
 </body>
 </html>
