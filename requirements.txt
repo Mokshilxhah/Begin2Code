@@ -3,5 +3,6 @@ python-dotenv
 werkzeug
 supabase
 gunicorn
-resend
+sib-api-v3-sdk
+
 
