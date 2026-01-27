@@ -16,6 +16,7 @@ if (el) {
     }, 4000);
 }
 
+// TOAST NOTIFICATIONS
 function showToast(message, type = 'info') {
     if (typeof toastr !== "undefined") {
         if (type === 'success') {
@@ -105,9 +106,8 @@ toastStyles.textContent = `
 `;
 document.head.appendChild(toastStyles);
 
-// ========================
+
 // AUTH MODAL FUNCTIONS
-// ========================
 function openLogin() {
     const loginModal = document.getElementById("loginModal");
     if (loginModal) {
@@ -166,9 +166,8 @@ function showVerification() {
     startTimer(180);
 }
 
-// ========================
+
 // OTP TIMER
-// ========================
 let timerInterval;
 function startTimer(seconds) {
     const timerEl = document.getElementById("timer");
@@ -218,9 +217,8 @@ function collectOTP() {
     return otp;
 }
 
-// ========================
+
 // FORM HANDLERS
-// ========================
 function handleRegister(event) {
     event.preventDefault();
 
@@ -306,7 +304,6 @@ function handleVerifyOTP(event) {
         if (data.success) {
             showToast(data.message, 'success');
             
-            // Check if there's an intended URL
             const intendedUrl = sessionStorage.getItem('intended_url');
             
             setTimeout(() => {
@@ -383,17 +380,13 @@ function handleLogin(event) {
         if (data.success) {
             showToast('Login successful! Redirecting...', 'success');
             
-            // Check if there's an intended URL (where user wanted to go)
             const intendedUrl = sessionStorage.getItem('intended_url');
             
             setTimeout(() => {
                 if (intendedUrl) {
-                    // Clear the stored URL
                     sessionStorage.removeItem('intended_url');
-                    // Redirect to intended page
                     window.location.href = intendedUrl;
                 } else {
-                    // Default redirect from server
                     window.location.href = data.redirect || '/dashboard';
                 }
             }, 1000);
@@ -411,27 +404,19 @@ function handleLogin(event) {
     });
 }
 
-// ========================
-// PROTECTED ROUTES HANDLER (PROFESSIONAL APPROACH)
-// ========================
+
+// PROTECTED ROUTES HANDLER
 function interceptProtectedRoutes() {
-    // Listen to all clicks on the document
     document.addEventListener('click', function(e) {
-        // Check if clicked element is a link or inside a link
         let link = e.target.closest('a');
         
         if (!link) return;
         
         const href = link.getAttribute('href');
-        
-        // List of protected routes
         const protectedRoutes = ['/dashboard', '/courses', '/notes'];
         
-        // Check if this is a protected route
         if (protectedRoutes.includes(href)) {
-            e.preventDefault(); // Stop normal navigation
-            
-            // Check authentication status
+            e.preventDefault();
             checkAuthAndNavigate(href);
         }
     });
@@ -447,51 +432,38 @@ function checkAuthAndNavigate(targetUrl) {
     .then(response => response.json())
     .then(data => {
         if (data.authenticated) {
-            // User is logged in - navigate normally
             window.location.href = targetUrl;
         } else {
-            // User not logged in - show modal
             showLoginModalForProtectedRoute(targetUrl);
         }
     })
     .catch(error => {
         console.error('Auth check error:', error);
-        // On error, show login modal to be safe
         showLoginModalForProtectedRoute(targetUrl);
     });
 }
 
 function showLoginModalForProtectedRoute(targetUrl) {
-    // Save where user wanted to go
     sessionStorage.setItem('intended_url', targetUrl);
-    
-    // Show the login modal
     openLogin();
-    
-    // Show informative message
     showToast('Please login to access this feature', 'warning');
 }
 
-// ========================
+
 // DOM CONTENT LOADED
-// ========================
 document.addEventListener("DOMContentLoaded", () => {
-    // Initialize protected routes interceptor
     interceptProtectedRoutes();
 
-    // Check if we need to show auth modal
     const showAuth = document.body.dataset.showAuth;
     if (showAuth === 'true') {
         openLogin();
     }
 
-    // Attach login form handler
     const loginForm = document.querySelector('.login-face form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
 
-    // OTP input handlers
     const otpInputs = document.querySelectorAll(".otp-box input");
 
     otpInputs.forEach((input, index) => {
@@ -526,7 +498,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Configure toastr if available
     if (typeof toastr !== "undefined") {
         toastr.options = {
             closeButton: true,
@@ -543,13 +514,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ========================
-// COURSE MODULES
+// COURSE MODULES - GLOBAL VARIABLES
 // ========================
-// modules variable is loaded from dashboard.html template
+let currentCourseId = null;
 let completedLectures = {};
-let savedNotes = {};
 let currentNote = {};
 
+
+// DASHBOARD SECTIONS
 function showSection(section, el) {
     document.querySelectorAll('.content-section').forEach(s => s.classList.add('d-none'));
     const sectionEl = document.getElementById(section + '-section');
@@ -603,13 +575,13 @@ function updateCoinsDisplay(coins) {
     }
 }
 
+
 function startLearning(courseId) {
-    // Convert courseId to string for dictionary lookup
-    const courseIdStr = String(courseId);
+    currentCourseId = String(courseId);
     
     const moduleTitle = document.getElementById('module-title');
     if (moduleTitle) {
-        moduleTitle.textContent = 'Course Modules - Course ID: ' + courseIdStr;
+        moduleTitle.textContent = 'Course Modules - ' + (modules[currentCourseId]?.[0]?.name || `Course ${courseId}`);
     }
     
     const accordion = document.getElementById('moduleAccordion');
@@ -617,17 +589,13 @@ function startLearning(courseId) {
     
     accordion.innerHTML = '';
 
-    // Check if modules exist for this course
-    if (!modules || !modules[courseIdStr]) {
-        console.error('No modules found for course:', courseIdStr);
-        console.log('Available modules:', Object.keys(modules || {}));
+    if (!modules || !modules[currentCourseId]) {
+        console.error('No modules found for course:', currentCourseId);
         showToast('Course modules are being prepared. Please check back soon!', 'info');
         return;
     }
-    
-    console.log('Loading modules for course:', courseIdStr);
 
-    modules[courseIdStr].forEach((module, idx) => {
+    modules[currentCourseId].forEach((module, idx) => {
         const collapseId = `collapse${idx}`;
         let content = '';
 
@@ -646,30 +614,30 @@ function startLearning(courseId) {
                         </thead>
                         <tbody>
                             ${module.chapters.map(ch => {
-                                const key = courseIdStr + '-' + module.id + '-' + ch.name;
+                                const key = currentCourseId + '-' + module.id + '-' + ch.name;
                                 return `
                                     <tr>
                                         <td>${ch.name}</td>
                                         <td class="text-center">
-                                            <a href="${ch.youtube}" target="_blank" class="me-2">
+                                            <a href="${ch.youtube}" target="_blank" class="me-2" title="Watch Video">
                                                 <svg class="resource-icon" fill="#dc2626" viewBox="0 0 24 24" style="width:24px;height:24px;">
                                                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                                                 </svg>
                                             </a>
-                                            <a href="${ch.pdf}" target="_blank">
+                                            <a href="${ch.pdf}" target="_blank" title="Download PDF">
                                                 <svg class="resource-icon" fill="#dc2626" viewBox="0 0 24 24" style="width:24px;height:24px;">
                                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM8 18v-1h8v1H8zm0-4v-1h8v1H8zm0-4V9h5v1H8z"/>
                                                 </svg>
                                             </a>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-primary" onclick="saveLecture('${ch.name}')">Save</button>
+                                            <button class="btn btn-sm btn-primary" onclick="saveLecture('${ch.name}', '${currentCourseId}')">Save</button>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-success" onclick="openNotes('${courseIdStr}', '${module.id}', '${ch.name}')">Notes</button>
+                                            <button class="btn btn-sm btn-success" onclick="openNotes('${currentCourseId}', '${module.id}', '${ch.name}')">Notes</button>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-secondary" id="btn-${key}" onclick="toggleComplete('${key}')">Mark</button>
+                                            <button class="btn btn-sm btn-outline-secondary" id="btn-${key}" onclick="toggleComplete('${key}', '${currentCourseId}')">Mark</button>
                                         </td>
                                     </tr>
                                 `;
@@ -706,6 +674,8 @@ function startLearning(courseId) {
     if (modulesSection) {
         modulesSection.classList.remove('d-none');
     }
+    
+    loadCompletedChapters(parseInt(currentCourseId));
 }
 
 function closeModules() {
@@ -713,38 +683,91 @@ function closeModules() {
     if (modulesSection) {
         modulesSection.classList.add('d-none');
     }
+    currentCourseId = null;
 }
 
-function toggleComplete(key) {
-    const btn = document.getElementById('btn-' + key);
-    if (!btn) return;
+
+function saveLecture(lectureName, courseId) {
+    const actualCourseId = courseId || currentCourseId;
     
-    completedLectures[key] = !completedLectures[key];
-    btn.textContent = completedLectures[key] ? '✓ Done' : 'Mark';
-    btn.className = completedLectures[key] ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary';
-    
-    if (completedLectures[key]) {
-        showToast('Chapter marked as complete!', 'success');
+    if (!actualCourseId) {
+        showToast('Course ID not found', 'error');
+        return;
     }
+
+    fetch('/save-lecture', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            course_id: parseInt(actualCourseId),
+            lecture_name: lectureName
+        })
+    })
+    .then(r => {
+        if (!r.ok) throw new Error('Network error');
+        return r.json();
+    })
+    .then(d => {
+        if (d.require_login) {
+            showToast(d.message, 'warning');
+            setTimeout(() => openLogin(), 1000);
+            return;
+        }
+        
+        if (d.success) {
+            showToast(d.message, 'success');
+        } else {
+            showToast(d.message || 'Failed to save lecture', 'error');
+        }
+    })
+    .catch(error => {
+        showToast('Failed to save lecture. Please try again.', 'error');
+        console.error('Save lecture error:', error);
+    });
 }
 
-function saveLecture(name) {
-    showToast('Lecture saved: ' + name, 'success');
-}
 
-function openNotes(course, module, chapter) {
-    currentNote = { course, module, chapter };
+function openNotes(courseId, moduleId, chapterName) {
+    currentNote = { 
+        course: courseId, 
+        module: moduleId, 
+        chapter: chapterName 
+    };
     
     const modalChapter = document.getElementById('modal-chapter');
     if (modalChapter) {
-        modalChapter.textContent = 'Chapter: ' + chapter;
+        modalChapter.textContent = `Chapter: ${chapterName}`;
     }
     
-    const key = course + '-' + module + '-' + chapter;
     const notesTextarea = document.getElementById('notes-textarea');
     if (notesTextarea) {
-        notesTextarea.value = savedNotes[key] || '';
+        notesTextarea.value = 'Loading...';
+        notesTextarea.disabled = true;
     }
+    
+    fetch('/get-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            course_id: parseInt(courseId),
+            module_id: moduleId,
+            chapter_name: chapterName
+        })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (notesTextarea) {
+            notesTextarea.disabled = false;
+            notesTextarea.value = d.note_text || '';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading notes:', error);
+        if (notesTextarea) {
+            notesTextarea.disabled = false;
+            notesTextarea.value = '';
+        }
+    });
     
     const notesModal = document.getElementById('notesModal');
     if (notesModal && typeof bootstrap !== 'undefined') {
@@ -752,17 +775,137 @@ function openNotes(course, module, chapter) {
     }
 }
 
+
 function saveNotes() {
-    const key = currentNote.course + '-' + currentNote.module + '-' + currentNote.chapter;
     const notesTextarea = document.getElementById('notes-textarea');
-    if (notesTextarea) {
-        savedNotes[key] = notesTextarea.value;
+    if (!notesTextarea) return;
+    
+    const notesContent = notesTextarea.value;
+    
+    fetch('/save-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            course_id: parseInt(currentNote.course),
+            module_id: currentNote.module,
+            chapter_name: currentNote.chapter,
+            note_text: notesContent
+        })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.require_login) {
+            showToast(d.message, 'warning');
+            setTimeout(() => openLogin(), 1000);
+            return;
+        }
+        
+        if (d.success) {
+            showToast(d.message, 'success');
+            
+            const notesModal = document.getElementById('notesModal');
+            if (notesModal && typeof bootstrap !== 'undefined') {
+                const modalInstance = bootstrap.Modal.getInstance(notesModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        } else {
+            showToast(d.message || 'Failed to save notes', 'error');
+        }
+    })
+    .catch(error => {
+        showToast('Failed to save notes. Please try again.', 'error');
+        console.error('Save notes error:', error);
+    });
+}
+
+
+function toggleComplete(chapterKey, courseId) {
+    const btn = document.getElementById('btn-' + chapterKey);
+    if (!btn) return;
+    
+    if (completedLectures[chapterKey]) {
+        showToast('Chapter already marked as complete', 'info');
+        return;
     }
     
-    const notesModal = document.getElementById('notesModal');
-    if (notesModal && typeof bootstrap !== 'undefined') {
-        bootstrap.Modal.getInstance(notesModal).hide();
+    const actualCourseId = courseId || currentCourseId;
+    
+    if (!actualCourseId) {
+        showToast('Course ID not found', 'error');
+        return;
     }
     
-    showToast('Notes saved successfully!', 'success');
+    btn.disabled = true;
+    const originalText = btn.textContent;
+    btn.textContent = 'Marking...';
+    
+    fetch('/mark-complete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            course_id: parseInt(actualCourseId),
+            chapter_key: chapterKey
+        })
+    })
+    .then(r => r.json())
+    .then(d => {
+        btn.disabled = false;
+        
+        if (d.require_login) {
+            btn.textContent = originalText;
+            showToast(d.message, 'warning');
+            setTimeout(() => openLogin(), 1000);
+            return;
+        }
+        
+        if (d.success) {
+            completedLectures[chapterKey] = true;
+            
+            btn.textContent = '✓ Done';
+            btn.className = 'btn btn-sm btn-success';
+            
+            showToast(d.message, 'success');
+            
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            btn.textContent = originalText;
+            showToast(d.message || 'Failed to mark chapter complete', 'error');
+        }
+    })
+    .catch(error => {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        showToast('Failed to mark chapter complete. Please try again.', 'error');
+        console.error('Mark complete error:', error);
+    });
+}
+
+
+function loadCompletedChapters(courseId) {
+    fetch('/get-completed-chapters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ course_id: courseId })
+    })
+    .then(r => r.json())
+    .then(d => {
+        if (d.success && d.completed_chapters) {
+            d.completed_chapters.forEach(chapterKey => {
+                completedLectures[chapterKey] = true;
+                
+                const btn = document.getElementById('btn-' + chapterKey);
+                if (btn) {
+                    btn.textContent = '✓ Done';
+                    btn.className = 'btn btn-sm btn-success';
+                }
+            });
+        }
+    })
+    .catch(error => {
+        console.error('Error loading completed chapters:', error);
+    });
 }
