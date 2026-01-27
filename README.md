@@ -1,6 +1,11 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=JetBrains+Mono&weight=600&size=26&pause=900&color=0D6EFD&center=true&vCenter=true&width=1000&lines=Begin2Code+—+Production-Grade+EdTech+Platform;Full-Stack+Flask+Application+%7C+Cloud+Deployed;Authentication+•+Courses+•+Emails+•+Dashboards" />
+  <marquee behavior="scroll" direction="left" scrollamount="6">
+    <b style="font-size:28px; color:#0d6efd;">
+      Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code &nbsp; Begin2Code
+    </b>
+  </marquee>
 </p>
+
 
 <p align="center">
   <a href="https://begin2code.onrender.com"><b>🌐 Live Application</b></a>
