@@ -113,6 +113,10 @@ function openLogin() {
     if (loginModal) {
         loginModal.style.display = "flex";
         document.body.style.overflow = 'hidden';
+        
+        if (!sessionStorage.getItem('intended_url')) {
+            sessionStorage.setItem('intended_url', window.location.pathname);
+        }
     }
 }
 
@@ -307,10 +311,11 @@ function handleVerifyOTP(event) {
             const intendedUrl = sessionStorage.getItem('intended_url');
             
             setTimeout(() => {
-                if (intendedUrl) {
+                if (intendedUrl && intendedUrl !== '/') {
                     sessionStorage.removeItem('intended_url');
                     window.location.href = intendedUrl;
                 } else {
+                    sessionStorage.removeItem('intended_url');
                     window.location.href = data.redirect || '/dashboard';
                 }
             }, 1500);
@@ -378,21 +383,22 @@ function handleLogin(event) {
         }
         
         if (data.success) {
-            showToast('Login successful! Redirecting...', 'success');
-            
-            const intendedUrl = sessionStorage.getItem('intended_url');
-            
-            setTimeout(() => {
-                if (intendedUrl) {
-                    sessionStorage.removeItem('intended_url');
-                    window.location.href = intendedUrl;
-                } else {
-                    window.location.href = data.redirect || '/dashboard';
-                }
-            }, 1000);
-        } else {
-            showToast(data.message, 'error');
-        }
+        showToast('Login successful! Redirecting...', 'success');
+        
+        const intendedUrl = sessionStorage.getItem('intended_url');
+        
+        setTimeout(() => {
+            if (intendedUrl && intendedUrl !== '/') {
+                sessionStorage.removeItem('intended_url');
+                window.location.href = intendedUrl;
+            } else {
+                sessionStorage.removeItem('intended_url');
+                window.location.href = data.redirect || '/dashboard';
+            }
+        }, 1000);
+    } else {
+        showToast(data.message, 'error');
+    }
     })
     .catch(error => {
         if (submitBtn) {
