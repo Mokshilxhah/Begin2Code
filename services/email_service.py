@@ -1,19 +1,23 @@
-import resend
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 import os
 
-resend.api_key = os.getenv('RESEND_API_KEY')
+configuration = sib_api_v3_sdk.Configuration()
+configuration.api_key['api-key'] = os.getenv('BREVO_API_KEY')
 
-SENDER_EMAIL = "onboarding@resend.dev"
+SENDER_EMAIL = "begincode7@gmail.com" 
 SENDER_NAME = "Begin2Code"
 
 def send_verification_email(recipient_email, otp):
+    """Send OTP verification email"""
     try:
-        resend.Emails.send({
-            "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
-            "reply_to": "begincode7@gmail.com",
-            "to": recipient_email,
-            "subject": "Begin2Code - Email Verification Code",
-            "html": f"""
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=[{"email": recipient_email}],
+            sender={"name": SENDER_NAME, "email": SENDER_EMAIL},
+            subject="Begin2Code - Email Verification Code",
+            html_content=f"""
             <!DOCTYPE html>
             <html>
             <body style="font-family:Arial, sans-serif; background:#f4f6f8; padding:20px;">
@@ -36,22 +40,25 @@ def send_verification_email(recipient_email, otp):
             </body>
             </html>
             """
-        })
+        )
+        
+        api_instance.send_transac_email(send_smtp_email)
         return True
-    except Exception as e:
-        print(f"Resend API Error: {e}")
+    except ApiException as e:
+        print(f"Brevo API Error: {e}")
         raise e
 
 
 def send_welcome_email(recipient_email, name):
     """Send welcome email after registration"""
     try:
-        resend.Emails.send({
-            "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
-            "reply_to": "begincode7@gmail.com",
-            "to": recipient_email,
-            "subject": "Welcome to Begin2Code — Your Learning Journey Starts Here",
-            "html": f"""
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=[{"email": recipient_email}],
+            sender={"name": SENDER_NAME, "email": SENDER_EMAIL},
+            subject="Welcome to Begin2Code — Your Learning Journey Starts Here",
+            html_content=f"""
             <!DOCTYPE html>
             <html>
             <body style="margin:0; padding:0; background:#eef1f5; font-family:Segoe UI, Roboto, Arial, sans-serif;">
@@ -173,22 +180,25 @@ def send_welcome_email(recipient_email, name):
             </body>
             </html>
             """
-        })
+        )
+        
+        api_instance.send_transac_email(send_smtp_email)
         return True
-    except Exception as e:
-        print(f"Resend API Error: {e}")
+    except ApiException as e:
+        print(f"Brevo API Error: {e}")
         raise e
 
 
 def send_course_purchase_email(recipient_email, name, course_name, course_price):
     """Send course purchase confirmation email"""
     try:
-        resend.Emails.send({
-            "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
-            "reply_to": "begincode7@gmail.com",
-            "to": recipient_email,
-            "subject": f"Course Purchased Successfully - {course_name}",
-            "html": f"""
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=[{"email": recipient_email}],
+            sender={"name": SENDER_NAME, "email": SENDER_EMAIL},
+            subject=f"Course Purchased Successfully - {course_name}",
+            html_content=f"""
             <!DOCTYPE html>
             <html>
             <body style="margin:0; padding:0; background:#eef1f5; font-family:Segoe UI, Roboto, Arial, sans-serif;">
@@ -330,22 +340,25 @@ def send_course_purchase_email(recipient_email, name, course_name, course_price)
             </body>
             </html>
             """
-        })
+        )
+        
+        api_instance.send_transac_email(send_smtp_email)
         return True
-    except Exception as e:
-        print(f"Resend API Error: {e}")
+    except ApiException as e:
+        print(f"Brevo API Error: {e}")
         raise e
 
 
 def forgot_password(recipient_email, name):
     """Send password change confirmation email"""
     try:
-        resend.Emails.send({
-            "from": f"{SENDER_NAME} <{SENDER_EMAIL}>",
-            "reply_to": "begincode7@gmail.com",
-            "to": recipient_email,
-            "subject": "Your Begin2Code Password Was Changed 🔐",
-            "html": f"""
+        api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+        
+        send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(
+            to=[{"email": recipient_email}],
+            sender={"name": SENDER_NAME, "email": SENDER_EMAIL},
+            subject="Your Begin2Code Password Was Changed 🔐",
+            html_content=f"""
             <!DOCTYPE html>
             <html>
             <body style="margin:0; padding:0; background:#eef1f5; font-family:Segoe UI, Roboto, Arial, sans-serif;">
@@ -446,8 +459,10 @@ def forgot_password(recipient_email, name):
             </body>
             </html>
             """
-        })
+        )
+        
+        api_instance.send_transac_email(send_smtp_email)
         return True
-    except Exception as e:
-        print(f"Resend API Error: {e}")
+    except ApiException as e:
+        print(f"Brevo API Error: {e}")
         raise e
