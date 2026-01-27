@@ -10,6 +10,12 @@
 
 </div>
 
+---
+<p align="center">
+  <a href="https://begin2code.onrender.com"><b>🌐 Live Application</b></a> · 
+</p>
+---
+
 ## ⚡ What is Begin2Code?
 
 **Begin2Code** is a **cloud-deployed EdTech platform** engineered to simulate a real-world learning product — covering **authentication, structured course delivery, emails, dashboards, and scalable backend design**.
