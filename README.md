@@ -1,76 +1,102 @@
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Inter&size=28&pause=1000&color=0D6EFD&center=true&vCenter=true&width=900&lines=Begin2Code+🚀+Learn.+Build.+Grow.;A+Full-Stack+EdTech+Platform;Flask+%7C+Supabase+%7C+Cloud+Deployed" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=JetBrains+Mono&weight=600&size=26&pause=900&color=0D6EFD&center=true&vCenter=true&width=1000&lines=Begin2Code+—+Production-Grade+EdTech+Platform;Full-Stack+Flask+Application+%7C+Cloud+Deployed;Authentication+•+Courses+•+Emails+•+Dashboards" />
 </p>
 
 <p align="center">
-  <a href="https://begin2code.onrender.com"><strong>🌐 Live Demo</strong></a>
+  <a href="https://begin2code.onrender.com"><b>🌐 Live Application</b></a>
 </p>
 
 ---
 
-## 📌 Project Overview
+## ⚡ What is Begin2Code?
 
-**Begin2Code** is a full-stack EdTech platform designed to help learners **start coding from scratch**, purchase courses, access structured learning content, and receive **secure email-based verification and notifications**.
+**Begin2Code** is a **cloud-deployed EdTech platform** engineered to simulate a real-world learning product — covering **authentication, structured course delivery, transactional emails, dashboards, and scalable backend design**.
 
-The project is built with **production-grade architecture**, cloud-hosted backend, managed database, and transactional email support — making it **interview-ready and scalable**.
+This project is not a demo app — it is built with **deployment constraints, production configuration, and interview-level system design** in mind.
 
 ---
 
-## 🚀 Deployment & Services Used
+## ☁️ Deployment & Infrastructure
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=render,supabase" height="48"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Brevo_logo.svg" height="40"/>
+  <img src="https://skillicons.dev/icons?i=render,supabase" height="42"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Brevo_logo.svg" height="34"/>
 </p>
 
-| Service     | Purpose |
-|------------|---------|
-| **Render** | Backend hosting & deployment |
-| **Supabase** | PostgreSQL database & auth-ready backend |
-| **Brevo (Sendinblue)** | Transactional & custom email delivery |
+| Layer | Platform | Reason |
+|-----|--------|--------|
+| Backend Hosting | **Render** | Zero-ops Flask deployment |
+| Database | **Supabase (PostgreSQL)** | Managed, scalable, secure |
+| Email | **Brevo SMTP** | Reliable transactional emails |
 
 ---
 
-## 🧰 Tech Stack
+## 🧠 Core Engineering Highlights
+
+- Modular **Flask Blueprint architecture**
+- Secure **session-based authentication**
+- OTP-based **email verification flow**
+- Cloud-native **PostgreSQL integration**
+- Environment-driven configuration (no secrets in code)
+- Service-layer abstraction for email logic
+- Production SMTP (not Gmail hacks)
+
+---
+
+## 🧰 Tech Stack (Compact View)
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=python,flask,html,css,js,bootstrap,postgresql,git,github" height="42"/>
+  <img src="https://skillicons.dev/icons?i=python,flask,postgresql,html,css,js,bootstrap,git,github" height="36"/>
 </p>
-
-| Layer | Technologies |
-|-----|-------------|
-| Backend | Flask (Python) |
-| Frontend | HTML, CSS, Bootstrap, JavaScript |
-| Database | PostgreSQL (Supabase) |
-| Emails | Flask-Mail + Brevo SMTP |
-| Hosting | Render |
-| Version Control | Git & GitHub |
 
 ---
 
-## ✨ Key Features
+## 🚀 Functional Capabilities
 
-### 👤 Authentication & User Flow
-- Secure user registration & login
-- Email OTP verification system
-- Session-based authentication
-- Flash messaging for UX feedback
+### 👤 User System
+- Register / Login / Logout
+- Email OTP verification
+- Secure session handling
 
-### 📚 Courses & Learning
-- Course listing with dynamic data
+### 📚 Learning Platform
+- Course catalog
 - Module-wise structured content
-- Notes and learning resources
-- Purchase flow with email confirmation
+- Notes & learning resources
+- Purchase flow with confirmation email
 
-### 📧 Email System
-- Custom HTML email templates
-- OTP-based email verification
-- Course purchase confirmation emails
-- SMTP-based delivery (Brevo)
+### 📧 Email Engine
+- Custom-designed HTML emails
+- OTP delivery
+- Course purchase confirmation
+- SMTP-based (Brevo)
 
 ### 📊 Dashboard
 - Personalized user dashboard
 - Purchased courses tracking
-- Modular backend routing using Blueprints
+- Clean route separation
 
+---
 
+## 🏗️ Architecture Snapshot
+Flask App
+├── Blueprints (auth, dashboard)
+├── Service Layer (email)
+├── Supabase PostgreSQL
+├── HTML/Jinja Templates
+└── Cloud Deployment (Render)
+
+---
+
+## 🎯 Why This Project Stands Out (Interview POV)
+
+- Uses **real SMTP infrastructure**, not mock email
+- Handles **cloud DB + backend hosting separation**
+- Clean separation of concerns (routes, services, data)
+- Designed under **free-tier production constraints**
+- Demonstrates backend decision-making, not just features
+
+---
+
+<p align="center">
+  <sub>Mokshil Shah</sub>
+</p>
