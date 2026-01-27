@@ -438,4 +438,48 @@ body {
                 padding: 12px 32px;
                 font-size: 16px;
             }
+
         }
+
+@media (max-width: 576px) {
+    .course-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .course-card {
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .course-card h3,
+    .course-card h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        line-height: 1.3;
+    }
+
+    .course-card p {
+        font-size: 12px;
+        line-height: 1.4;
+        margin-bottom: 10px;
+        color: #6b7280;
+    }
+
+    .course-card i {
+        font-size: 14px;
+    }
+
+    .course-card .buy-btn,
+    .course-card .course-buy-btn {
+        width: 100%;
+        padding: 8px 0;
+        font-size: 13px;
+        border-radius: 8px;
+    }
+
+}
