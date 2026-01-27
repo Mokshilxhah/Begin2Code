@@ -1,8 +1,6 @@
 import os
-from dotenv import load_dotenv
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, flash, session
-from flask_mail import Mail
 from werkzeug.security import generate_password_hash, check_password_hash
 from services.email_service import send_welcome_email, send_verification_email
 from random import randint
@@ -10,20 +8,6 @@ from functools import wraps
 from models import db
 
 app = Flask(__name__)
-load_dotenv()
-
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
-app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
-app.config['MAIL_DEFAULT_SENDER'] = (
-    "Begin2Code",
-    os.getenv("MAIL_USERNAME")
-)
-mail = Mail(app)
-
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 app.config['PERMANENT_SESSION_LIFETIME'] = 86400 
@@ -150,7 +134,7 @@ def register():
     session["otp_attempts"] = 0
     
     try:
-        send_verification_email(mail, email, otp)
+        send_verification_email(email, otp)
         return jsonify({
             "success": True,
             "message": "OTP Sent to your Mail. Please check your inbox."
@@ -198,7 +182,7 @@ def verify_otp():
             })
         
         try:
-            send_welcome_email(mail, session["reg_email"], session["reg_name"])
+            send_welcome_email(session["reg_email"], session["reg_name"])
         except Exception as e:
             print(f"Welcome email error: {e}")
         
@@ -260,6 +244,5 @@ def internal_error(e):
     return render_template("index.html"), 500
 
 if __name__ == "__main__":
-
-    app.run(debug=os.getenv("FLASK_DEBUG") == "True")
-
+    app.run(debug="True")
+    #app.run(debug=os.getenv("FLASK_DEBUG") == "True")
