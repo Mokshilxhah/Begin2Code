@@ -18,11 +18,6 @@ This project is not a demo app — it is built with **deployment constraints, pr
 
 ## ☁️ Deployment & Infrastructure
 
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=render,supabase" height="42"/>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Brevo_logo.svg" height="34"/>
-</p>
-
 | Layer | Platform | Reason |
 |-----|--------|--------|
 | Backend Hosting | **Render** | Zero-ops Flask deployment |
