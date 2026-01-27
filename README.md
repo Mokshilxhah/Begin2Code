@@ -1,33 +1,6 @@
 <p align="center">
-  <svg width="100%" height="48" viewBox="0 0 1200 48" xmlns="http://www.w3.org/2000/svg">
-    <style>
-      .text {
-        font-family: 'Inter', sans-serif;
-        font-size: 28px;
-        font-weight: 700;
-        fill: #0d6efd;
-      }
-      .move {
-        animation: slide 18s linear infinite;
-      }
-      @keyframes slide {
-        from { transform: translateX(0); }
-        to { transform: translateX(-600px); }
-      }
-    </style>
-
-    <g class="move">
-      <text x="0" y="32" class="text">
-        Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;
-      </text>
-      <text x="600" y="32" class="text">
-        Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;Begin2Code&nbsp;&nbsp;&nbsp;
-      </text>
-    </g>
-  </svg>
+  <img src="https://readme-typing-svg.herokuapp.com?font=JetBrains+Mono&weight=600&size=26&pause=900&color=0D6EFD&center=true&vCenter=true&width=1000&lines=Begin2Code+—+Production-Grade+EdTech+Platform;Full-Stack+Flask+Application+%7C+Cloud+Deployed;Authentication+•+Courses+•+Emails+•+Dashboards" />
 </p>
->
-
 
 <p align="center">
   <a href="https://begin2code.onrender.com"><b>🌐 Live Application</b></a>
