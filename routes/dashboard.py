@@ -8,7 +8,6 @@ from data.courses_data import courses
 from data.notes_data import NOTES
 from data.modules_data import MODULES_DATA 
 
-from flask import current_app
 from services.email_service import send_course_purchase_email
 from models import db
 
@@ -135,10 +134,8 @@ def buy_course():
         f"Purchased {course_found['name']}"
     )
     
-    mail = current_app.extensions['mail']
     try:
         send_course_purchase_email(
-            mail=mail,
             recipient_email=user["email"],
             name=user["name"],
             course_name=course_found['name'],
