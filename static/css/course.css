@@ -404,6 +404,28 @@ body {
             transform: translateY(0);
         }
 
+        /* Resource Icons Styling */
+        .resource-icon {
+            width: 32px !important;
+            height: 32px !important;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-icon:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        /* Table styling for better icon alignment */
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table .text-center {
+            text-align: center !important;
+        }
+
         @media (max-width: 992px) {
             .modal-container {
                 height: 90vh;
@@ -437,6 +459,12 @@ body {
             .buy-btn {
                 padding: 12px 32px;
                 font-size: 16px;
+            }
+
+            /* Responsive icon sizing */
+            .resource-icon {
+                width: 28px !important;
+                height: 28px !important;
             }
 
         }
