@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/course.css') }}">
 </head>
 
 <body>
@@ -162,8 +163,9 @@
                                         <h5>{{ course.name }}</h5>
                                         <p class="small text-muted">{{ course.description }}</p>
                                         <p class="fw-bold text-success mt-2">₹{{ course.price }}</p>
-                                        <button class="explore mt-2 w-100"
-                                            onclick="buyCourse('{{ course.id }}', '{{ course.name }}')">Buy Now</button>
+                                        <button class="explore mt-2 w-100" onclick="openCourseModal({{ course.id }}, '{{ course.name }}', {{ course.price }})">
+                                            Explore
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -251,6 +253,86 @@
         </div>
     </div>
 
+<!-- COURSE DETAIL MODAL -->
+<div class="course-modal" id="courseModal">
+    <div class="modal-container">
+        <div class="modal-header-custom">
+            <h2 id="courseModalTitle">Course Name</h2>
+            <button class="close-modal" onclick="closeCourseModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="modal-body-custom">
+            <div class="modules-section">
+                <h3>Course Modules</h3>
+                <div id="modulesList"></div>
+            </div>
+
+            <div class="pricing-section">
+                <div class="price-card">
+                    <div class="price-label">Course Fee</div>
+                    <div class="price-amount" id="coursePrice">₹4999</div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-globe"></i>
+                        <h4>Language</h4>
+                    </div>
+                    <div class="language-pills">
+                        <div class="language-pill active" onclick="selectLanguage(this)">Hindi</div>
+                        <div class="language-pill" onclick="selectLanguage(this)">English</div>
+                        <div class="language-pill" onclick="selectLanguage(this)">Hinglish</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-user-tie"></i>
+                        <h4>Know Your Teachers</h4>
+                    </div>
+                    <div class="teacher-item">
+                        <div class="teacher-avatar">RS</div>
+                        <div class="teacher-info">
+                            <h5>Rahul Sharma</h5>
+                            <p>8+ years Experience</p>
+                        </div>
+                    </div>
+                    <div class="teacher-item">
+                        <div class="teacher-avatar">PP</div>
+                        <div class="teacher-info">
+                            <h5>Priya Patel</h5>
+                            <p>6+ years Experience</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-card-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h4>Batch Timeline</h4>
+                    </div>
+                    <div class="timeline-item start">
+                        <span class="timeline-label">Start Date</span>
+                        <span class="timeline-date">Feb 1, 2026</span>
+                    </div>
+                    <div class="timeline-item end">
+                        <span class="timeline-label">End Date</span>
+                        <span class="timeline-date">May 30, 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer-custom">
+            <button class="buy-btn" onclick="purchaseCourse()">
+                Buy Now - <span id="footerPrice">₹4999</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- ========================= Referal Modal ================================= -->
     <div class="modal fade" id="referModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog">
@@ -299,6 +381,190 @@
     <script>
         const modules = {{ modules|tojson|safe }};
         console.log('Modules loaded:', modules);
+        
+        // Global variables for course modal
+        window.currentCourseId = null;
+        window.currentCoursePrice = null;
+
+        const moduleNames = [
+            "Fundamentals",
+            "Advanced Concepts", 
+            "Project Building",
+            "Backend Development",
+            "Database Integration",
+            "Deployment",
+            "Best Practices"
+        ];
+
+        // Global function to open course modal
+        window.openCourseModal = function(courseId, courseName, price) {
+            console.log('Opening modal for:', courseName);
+            
+            window.currentCourseId = courseId;
+            window.currentCoursePrice = price;
+
+            document.getElementById('courseModalTitle').textContent = courseName;
+            document.getElementById('coursePrice').textContent = '₹' + price;
+            document.getElementById('footerPrice').textContent = '₹' + price;
+
+            const modulesList = document.getElementById('modulesList');
+            modulesList.innerHTML = '';
+
+            moduleNames.forEach((moduleName, index) => {
+                const isLocked = index > 0;
+                const moduleHtml = `
+                    <div class="module-item ${isLocked ? 'locked' : ''}" id="module-${index}">
+                        <div class="module-header ${index === 0 ? 'active' : ''}" onclick="toggleModule(${index}, ${!isLocked})">
+                            <span class="module-title">${moduleName}</span>
+                            <div class="module-icons">
+                                ${isLocked ? '<i class="fas fa-lock lock-icon"></i>' : '<i class="fas fa-chevron-down chevron-icon"></i>'}
+                            </div>
+                        </div>
+                        ${!isLocked ? `
+                        <div class="module-content ${index === 0 ? 'open' : ''}" id="content-${index}">
+                            <ul>
+                                <li>Introduction to ${moduleName}</li>
+                                <li>Key Concepts and Theory</li>
+                                <li>Practical Implementation</li>
+                                <li>Hands-on Projects</li>
+                            </ul>
+                        </div>` : ''}
+                    </div>
+                `;
+                modulesList.innerHTML += moduleHtml;
+            });
+
+            const modal = document.getElementById('courseModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        };
+
+        // Global function to close course modal
+        window.closeCourseModal = function() {
+            const modal = document.getElementById('courseModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            window.currentCourseId = null;
+            window.currentCoursePrice = null;
+        };
+
+        // Global function to toggle modules
+        window.toggleModule = function(index, canToggle) {
+            if (!canToggle) return;
+
+            const content = document.getElementById(`content-${index}`);
+            const header = document.querySelector(`#module-${index} .module-header`);
+            const chevron = header ? header.querySelector('.chevron-icon') : null;
+
+            document.querySelectorAll('.module-content').forEach((c, i) => {
+                if (i !== index) {
+                    c.classList.remove('open');
+                    const h = document.querySelector(`#module-${i} .module-header`);
+                    if (h) h.classList.remove('active');
+                    const ch = h ? h.querySelector('.chevron-icon') : null;
+                    if (ch) ch.classList.remove('rotated');
+                }
+            });
+
+            if (content) content.classList.toggle('open');
+            if (header) header.classList.toggle('active');
+            if (chevron) chevron.classList.toggle('rotated');
+        };
+
+        // Global function to select language
+        window.selectLanguage = function(element) {
+            document.querySelectorAll('.language-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            element.classList.add('active');
+        };
+
+        // Global function to purchase course
+        window.purchaseCourse = function() {
+            if (!window.currentCourseId) {
+                if (typeof showToast === 'function') {
+                    showToast('Course not selected', 'error');
+                } else {
+                    alert('Course not selected');
+                }
+                return;
+            }
+
+            fetch('/buy-course', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ course_id: window.currentCourseId })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network error');
+                return response.json();
+            })
+            .then(data => {
+                if (data.require_login) {
+                    if (typeof showToast === 'function') {
+                        showToast(data.message, 'warning');
+                    }
+                    window.closeCourseModal();
+                    sessionStorage.setItem('intended_url', '/dashboard');
+                    setTimeout(() => {
+                        if (typeof openLogin === 'function') {
+                            openLogin();
+                        }
+                    }, 500);
+                    return;
+                }
+                
+                if (data.low_balance) {
+                    if (typeof showToast === 'function') {
+                        showToast(data.message, 'error');
+                    }
+                    return;
+                }
+                
+                if (data.success) {
+                    if (typeof showToast === 'function') {
+                        showToast(data.message + ' Remaining coins: ' + data.remaining_coins, 'success');
+                    }
+                    window.closeCourseModal();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                } else {
+                    if (typeof showToast === 'function') {
+                        showToast(data.message, 'error');
+                    }
+                }
+            })
+            .catch(error => {
+                if (typeof showToast === 'function') {
+                    showToast('Failed to process purchase. Please try again.', 'error');
+                }
+                console.error('Purchase error:', error);
+            });
+        };
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('courseModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        window.closeCourseModal();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('courseModal');
+                    if (modal && modal.classList.contains('show')) {
+                        window.closeCourseModal();
+                    }
+                }
+            });
+            
+            console.log('Dashboard course modal functions initialized');
+        });
     </script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
