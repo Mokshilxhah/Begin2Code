@@ -3,6 +3,18 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<style>
+    .note-badge.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    
+    .note-badge.coming-soon-text::after {
+        content: " - Coming Soon";
+        font-size: 0.85em;
+    }
+</style>
 {% endblock %}
 
 {% block content%}
@@ -20,19 +32,25 @@
                 </div>
 
                 <div class="notes-overlay">
-                    <a href="{{ url_for('static', filename=note.full) }}" 
-                       class="note-badge full" target="_blank">
-                        <i class="fa-solid fa-book"></i> Full Notes
+                    <a href="{{ url_for('notes.download_note', note_type='Full', filename=note.full.split('/')[-1]) }}" 
+                       class="note-badge full check-availability"
+                       data-note-type="Full"
+                       data-filename="{{ note.full.split('/')[-1] }}">
+                        <i class="fa-solid fa-book"></i> <span class="badge-text">Full Notes</span>
                     </a>
 
-                    <a href="{{ url_for('static', filename=note.short) }}" 
-                       class="note-badge short" target="_blank">
-                        <i class="fa-solid fa-file-lines"></i> Short Notes
+                    <a href="{{ url_for('notes.download_note', note_type='Short', filename=note.short.split('/')[-1]) }}" 
+                       class="note-badge short check-availability"
+                       data-note-type="Short"
+                       data-filename="{{ note.short.split('/')[-1] }}">
+                        <i class="fa-solid fa-file-lines"></i> <span class="badge-text">Short Notes</span>
                     </a>
 
-                    <a href="{{ url_for('static', filename=note.mind) }}" 
-                       class="note-badge mind" target="_blank">
-                        <i class="fa-solid fa-brain"></i> Mind Maps
+                    <a href="{{ url_for('notes.download_note', note_type='Mind', filename=note.mind.split('/')[-1]) }}" 
+                       class="note-badge mind check-availability"
+                       data-note-type="Mind"
+                       data-filename="{{ note.mind.split('/')[-1] }}">
+                        <i class="fa-solid fa-brain"></i> <span class="badge-text">Mind Maps</span>
                     </a>
                 </div>
             </div>
@@ -40,4 +58,39 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const noteLinks = document.querySelectorAll('.check-availability');
+    
+    noteLinks.forEach(link => {
+        const noteType = link.dataset.noteType;
+        const filename = link.dataset.filename;
+        const url = `/download-note/${noteType}/${filename}`;
+        
+        // Check if file exists
+        fetch(url, { method: 'HEAD' })
+            .then(response => {
+                if (!response.ok) {
+                    link.classList.add('disabled');
+                    const badgeText = link.querySelector('.badge-text');
+                    badgeText.textContent = 'Coming Soon';
+                }
+            })
+            .catch(() => {
+                link.classList.add('disabled');
+                const badgeText = link.querySelector('.badge-text');
+                badgeText.textContent = 'Coming Soon';
+            });
+        
+        // Prevent click on disabled links
+        link.addEventListener('click', function(e) {
+            if (this.classList.contains('disabled')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
