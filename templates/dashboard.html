@@ -163,7 +163,7 @@
                                         <h5>{{ course.name }}</h5>
                                         <p class="small text-muted">{{ course.description }}</p>
                                         <p class="fw-bold text-success mt-2">₹{{ course.price }}</p>
-                                        <button class="explore mt-2 w-100" onclick="openCourseModal({{ course.id }}, '{{ course.name }}', {{ course.price }})">
+                                        <button class="explore mt-2 w-100" onclick="openCourseModal({{ course.id }}, {{ course.name|tojson }}, {{ course.price }})">
                                             Explore
                                         </button>
                                     </div>
@@ -187,19 +187,25 @@
                                             style="width:100%; height:100%; object-fit:cover;">
                                     </div>
                                     <div class="notes-overlay">
-                                        <a href="{{ url_for('static', filename=note.full) }}" 
-                                        class="note-badge full" target="_blank">
-                                            <i class="fa-solid fa-book"></i> Full Notes
+                                        <a href="{{ url_for('notes.download_note', note_type='Full', filename=note.full.split('/')[-1]) }}" 
+                                           class="note-badge full check-availability-dash"
+                                           data-note-type="Full"
+                                           data-filename="{{ note.full.split('/')[-1] }}">
+                                            <i class="fa-solid fa-book"></i> <span class="badge-text">Full Notes</span>
                                         </a>
 
-                                        <a href="{{ url_for('static', filename=note.short) }}" 
-                                        class="note-badge short" target="_blank">
-                                            <i class="fa-solid fa-file-lines"></i> Short Notes
+                                        <a href="{{ url_for('notes.download_note', note_type='Short', filename=note.short.split('/')[-1]) }}" 
+                                           class="note-badge short check-availability-dash"
+                                           data-note-type="Short"
+                                           data-filename="{{ note.short.split('/')[-1] }}">
+                                            <i class="fa-solid fa-file-lines"></i> <span class="badge-text">Short Notes</span>
                                         </a>
 
-                                        <a href="{{ url_for('static', filename=note.mind) }}" 
-                                        class="note-badge mind" target="_blank">
-                                            <i class="fa-solid fa-brain"></i> Mind Maps
+                                        <a href="{{ url_for('notes.download_note', note_type='Mind', filename=note.mind.split('/')[-1]) }}" 
+                                           class="note-badge mind check-availability-dash"
+                                           data-note-type="Mind"
+                                           data-filename="{{ note.mind.split('/')[-1] }}">
+                                            <i class="fa-solid fa-brain"></i> <span class="badge-text">Mind Maps</span>
                                         </a>
                                     </div>
                                 </div>
@@ -253,7 +259,7 @@
         </div>
     </div>
 
-<!-- COURSE DETAIL MODAL -->
+<!-- IMPROVED COURSE DETAIL MODAL WITH DEMO LECTURE -->
 <div class="course-modal" id="courseModal">
     <div class="modal-container">
         <div class="modal-header-custom">
@@ -264,11 +270,36 @@
         </div>
 
         <div class="modal-body-custom">
-            <div class="modules-section">
-                <h3>Course Modules</h3>
-                <div id="modulesList"></div>
+            <!-- LEFT COLUMN: Demo Video + Modules (60%) -->
+            <div class="demo-and-modules-section">
+                <!-- Demo Lecture Section -->
+                <div class="demo-section">
+                    <h3>
+                        <i class="fas fa-play-circle"></i>
+                        Demo Lecture
+                    </h3>
+                    <div class="demo-video-container">
+                        <iframe 
+                            id="demoVideoFrame"
+                            src="https://www.youtube.com/embed/UB1O30fR-EE" 
+                            title="HTML Crash Course For Absolute Beginners"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Course Modules Section - Compact -->
+                <div class="modules-section-compact">
+                    <h3>
+                        <i class="fas fa-book-open"></i>
+                        Course Modules
+                    </h3>
+                    <div id="modulesList"></div>
+                </div>
             </div>
 
+            <!-- RIGHT COLUMN: Pricing Info (40%) -->
             <div class="pricing-section">
                 <div class="price-card">
                     <div class="price-label">Course Fee</div>
@@ -396,6 +427,49 @@
             "Best Practices"
         ];
 
+        // Demo video URLs for different courses (customize these with your actual videos)
+        const demoVideos = {
+            // Full Courses
+            1: "https://www.youtube.com/embed/UB1O30fR-EE", // MERN Stack - HTML Crash Course
+            2: "https://www.youtube.com/embed/eWRfhZUzrAc", // Java Developer - Java Tutorial for Beginners
+            3: "https://www.youtube.com/embed/kqtD5dpn9C8", // Python Developer - Python for Beginners
+            4: "https://www.youtube.com/embed/UB1O30fR-EE", // Frontend Developer - HTML Crash Course
+            5: "https://www.youtube.com/embed/ua-CiDNNj30", // Data Science - Python Data Science Tutorial
+            6: "https://www.youtube.com/embed/Wvf0mBNGjXY", // DevOps Engineer - DevOps Tutorial for Beginners
+            
+            // Frontend
+            7: "https://www.youtube.com/embed/UB1O30fR-EE", // HTML - HTML Crash Course
+            8: "https://www.youtube.com/embed/yfoY53QXEnI", // CSS - CSS Crash Course
+            9: "https://www.youtube.com/embed/PkZNo7MFNFg", // JavaScript - Learn JavaScript in 12 Minutes
+            10: "https://www.youtube.com/embed/w7ejDZ8SWv8", // React - React JS Crash Course
+            11: "https://www.youtube.com/embed/4sosXZsdy-s", // Bootstrap - Bootstrap 5 Crash Course
+            12: "https://www.youtube.com/embed/UBOj6rqRUME", // Tailwind CSS - Tailwind CSS Crash Course
+            
+            // Backend
+            13: "https://www.youtube.com/embed/fBNz5xF-Kx4", // Node.js - Node.js Crash Course
+            14: "https://www.youtube.com/embed/eWRfhZUzrAc", // Java - Java Tutorial for Beginners
+            15: "https://www.youtube.com/embed/kqtD5dpn9C8", // Python - Python for Beginners
+            16: "https://www.youtube.com/embed/KJgsSFOSQv0", // C/C++ - C Programming Tutorial
+            17: "https://www.youtube.com/embed/ImtZ5yENzgE", // PHP Laravel - Laravel PHP Framework Tutorial
+            18: "https://www.youtube.com/embed/T99ihkEBOHs", // Ruby on Rails - Ruby on Rails Tutorial
+            19: "https://www.youtube.com/embed/YS4e4q9oBaU", // Go - Golang Tutorial for Beginners
+            
+            // Libraries
+            20: "https://www.youtube.com/embed/4deVCNJq3qc", // Vue.js - Vue JS Crash Course
+            21: "https://www.youtube.com/embed/tPYj3fFJGjk", // TensorFlow - TensorFlow 2.0 Complete Course
+            22: "https://www.youtube.com/embed/UBOj6rqRUME", // Tailwind CSS - Tailwind CSS Crash Course
+            23: "https://www.youtube.com/embed/xHinchbI4IU", // Hibernate - Hibernate Tutorial
+            
+            // Databases
+            24: "https://www.youtube.com/embed/7S_tz1z_5bA", // MySQL - MySQL Tutorial for Beginners
+            25: "https://www.youtube.com/embed/c2M-rlkkT5o", // MongoDB - MongoDB Crash Course
+            26: "https://www.youtube.com/embed/8JJ101D3knE", // Git - Git Tutorial for Beginners
+            27: "https://www.youtube.com/embed/8JJ101D3knE", // GitHub - Git and GitHub Tutorial
+            
+            // Default fallback
+            'default': "https://www.youtube.com/embed/UB1O30fR-EE" // HTML Crash Course as default
+        };
+
         // Global function to open course modal
         window.openCourseModal = function(courseId, courseName, price) {
             console.log('Opening modal for:', courseName);
@@ -403,10 +477,19 @@
             window.currentCourseId = courseId;
             window.currentCoursePrice = price;
 
+            // Update modal title and price
             document.getElementById('courseModalTitle').textContent = courseName;
             document.getElementById('coursePrice').textContent = '₹' + price;
             document.getElementById('footerPrice').textContent = '₹' + price;
 
+            // Set demo video based on course
+            const demoFrame = document.getElementById('demoVideoFrame');
+            if (demoFrame) {
+                const videoUrl = demoVideos[courseId] || demoVideos['default'];
+                demoFrame.src = videoUrl;
+            }
+
+            // Populate modules
             const modulesList = document.getElementById('modulesList');
             modulesList.innerHTML = '';
 
@@ -444,6 +527,15 @@
             const modal = document.getElementById('courseModal');
             modal.classList.remove('show');
             document.body.style.overflow = 'auto';
+            
+            // Stop video playback when closing modal
+            const demoFrame = document.getElementById('demoVideoFrame');
+            if (demoFrame) {
+                const currentSrc = demoFrame.src;
+                demoFrame.src = '';
+                setTimeout(() => demoFrame.src = currentSrc, 100);
+            }
+            
             window.currentCourseId = null;
             window.currentCoursePrice = null;
         };
@@ -545,6 +637,7 @@
 
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            // Click outside to close
             const modal = document.getElementById('courseModal');
             if (modal) {
                 modal.addEventListener('click', function(e) {
@@ -554,6 +647,7 @@
                 });
             }
 
+            // ESC key to close
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     const modal = document.getElementById('courseModal');
@@ -563,12 +657,40 @@
                 }
             });
             
+            // Check note availability in dashboard
+            const dashNoteLinks = document.querySelectorAll('.check-availability-dash');
+            dashNoteLinks.forEach(link => {
+                const noteType = link.dataset.noteType;
+                const filename = link.dataset.filename;
+                const url = `/download-note/${noteType}/${filename}`;
+                
+                fetch(url, { method: 'HEAD' })
+                    .then(response => {
+                        if (!response.ok) {
+                            link.classList.add('disabled');
+                            const badgeText = link.querySelector('.badge-text');
+                            if (badgeText) badgeText.textContent = 'Coming Soon';
+                        }
+                    })
+                    .catch(() => {
+                        link.classList.add('disabled');
+                        const badgeText = link.querySelector('.badge-text');
+                        if (badgeText) badgeText.textContent = 'Coming Soon';
+                    });
+                
+                link.addEventListener('click', function(e) {
+                    if (this.classList.contains('disabled')) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+            });
+            
             console.log('Dashboard course modal functions initialized');
         });
     </script>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-
 
 </html>
