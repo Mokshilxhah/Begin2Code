@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, session, redirect, url_for
+from flask import Blueprint, render_template, session, redirect, url_for, send_from_directory, abort, jsonify
 from data.notes_data import NOTES
 from functools import wraps
 from models import db
+import os
 
 notes_bp = Blueprint('notes', __name__)
 
@@ -29,3 +30,20 @@ def notes_page():
         user=user,
         mode="notes"
     )
+
+@notes_bp.route('/download-note/<note_type>/<path:filename>')
+@login_required
+def download_note(note_type, filename):
+    """Download notes PDF files"""
+    try:
+        static_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'static')
+        file_path = os.path.join(static_folder, note_type, filename)
+        
+        if not os.path.exists(file_path):
+            return jsonify({"error": "File not available yet"}), 404
+        
+        directory = os.path.join(static_folder, note_type)
+        return send_from_directory(directory, filename, as_attachment=True)
+    except Exception as e:
+        print(f"Download error: {e}")
+        return jsonify({"error": "File not available yet"}), 404
